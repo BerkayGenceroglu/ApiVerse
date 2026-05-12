@@ -1,8 +1,7 @@
 <h1 align="center"> ApiVerse — Çok Modüllü API ve AI Entegrasyon Platformu</h1>
 
 <p align="center">
-  Kripto para, GitHub, kitap, müzik ve iş ilanları verilerini tek çatı altında toplayan,  
-  GPT-4o destekli AI analiz katmanına sahip ASP.NET Core MVC / Web API platformu
+Kripto, deprem, konum, yakıt, döviz, futbol, kitap, müzik ve film verilerini tek bir çatı altında toplayan; GPT-4o destekli yapay zeka analiz katmanına sahip ASP.NET Core MVC / Web API tabanlı bir platformdur.
 </p>
 
 ---
@@ -52,7 +51,7 @@ ApiVerse/
 │   │   ├── SpotifyController.cs
 │   │   └── JobsController.cs
 │   ├── Services/                         → İş Mantığı Servisleri
-│   │   ├── OpenAIService.cs              → GPT-4o Entegrasyonu
+│   │   ├── OpenAIService.cs              
 │   │   ├── CryptoService.cs
 │   │   ├── GitHubService.cs
 │   │   ├── BooksService.cs
