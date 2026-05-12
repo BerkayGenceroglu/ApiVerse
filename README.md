@@ -152,11 +152,12 @@ Anlık kripto para fiyatlarını, 24 saatlik değişim oranlarını ve piyasa ve
 
 > 📸 **Kripto Para Listesi**
 >
-> ![Kripto Para Listesi](https://via.placeholder.com/900x500/0d1117/f7931a?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
+><img width="1865" height="951" alt="Kripto1" src="https://github.com/user-attachments/assets/95dcafde-6b8b-4b87-9b93-ac9c4113bd41" />
 
 > 📸 **GPT-4o Piyasa Analizi Çıktısı**
 >
-> ![AI Kripto Analizi](https://via.placeholder.com/900x400/0d1117/412991?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
+> <img width="1852" height="951" alt="kripto2" src="https://github.com/user-attachments/assets/3665720f-017d-41b7-a4f4-c49941a14b04" />
+
 
 ---
 
