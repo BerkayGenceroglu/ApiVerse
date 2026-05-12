@@ -421,7 +421,6 @@ Google Books API üzerinden kitap verilerini çekerek kullanıcıya arama, filtr
 
 ### 📸 Kitap Arama Sonuçları
 
-<img width="1872" height="1372" alt="Book" src="https://github.com/user-attachments/assets/44ffaff5-fdbb-429a-8bf9-0ad380830cf4" />
 <img width="1844" height="1356" alt="Book2" src="https://github.com/user-attachments/assets/e9d3141d-a950-4f3b-a2a7-96a0e35e6b8e" />
 
 
