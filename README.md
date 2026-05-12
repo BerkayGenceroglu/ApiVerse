@@ -1,330 +1,321 @@
-# 🌐 ApiVerse
+<h1 align="center"> ApiVerse — Çok Modüllü API ve AI Entegrasyon Platformu</h1>
 
-<div align="center">
-
-![ApiVerse Banner](https://via.placeholder.com/900x200/1a1a2e/6c63ff?text=ApiVerse+-+Multi+Module+API+Integration+Platform)
-
-[![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/)
-[![ASP.NET Core](https://img.shields.io/badge/ASP.NET_Core-MVC%20%7C%20Web%20API-512BD4?style=for-the-badge&logo=dotnet)](https://docs.microsoft.com/aspnet/core)
-[![C#](https://img.shields.io/badge/C%23-12.0-239120?style=for-the-badge&logo=csharp)](https://docs.microsoft.com/dotnet/csharp/)
-[![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-412991?style=for-the-badge&logo=openai)](https://openai.com/)
-[![MassTransit](https://img.shields.io/badge/MassTransit-Messaging-FF6B35?style=for-the-badge)](https://masstransit.io/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
-
-**Birden fazla harici API'yi tek çatı altında toplayan, GPT-4o destekli AI analiz katmanına sahip çok modüllü ASP.NET Core MVC/Web API platformu.**
-
-[Özellikler](#-özellikler) • [Mimari](#-mimari) • [Kurulum](#-kurulum) • [Modüller](#-modüller) • [API Dokümantasyonu](#-api-dokümantasyonu) • [Ekran Görüntüleri](#-ekran-görüntüleri)
-
-</div>
+<p align="center">
+  Kripto para, GitHub, kitap, müzik ve iş ilanları verilerini tek çatı altında toplayan,  
+  GPT-4o destekli AI analiz katmanına sahip ASP.NET Core MVC / Web API platformu
+</p>
 
 ---
 
-## 📋 İçindekiler
+## 🧾 Proje Tanıtımı
 
-- [Proje Hakkında](#-proje-hakkında)
-- [Özellikler](#-özellikler)
-- [Mimari](#-mimari)
-- [Teknoloji Stack'i](#-teknoloji-stacki)
-- [Modüller](#-modüller)
-  - [Kripto Para Modülü](#-kripto-para-modülü)
-  - [GitHub Trending Modülü](#-github-trending-modülü)
-  - [Google Books Modülü](#-google-books-modülü)
-  - [Spotify Modülü](#-spotify-modülü)
-  - [İş İlanları Modülü](#-i̇ş-i̇lanları-modülü)
-  - [AI Analiz Katmanı](#-ai-analiz-katmanı)
-- [Kurulum](#-kurulum)
-- [Yapılandırma](#-yapılandırma)
-- [API Dokümantasyonu](#-api-dokümantasyonu)
-- [Ekran Görüntüleri](#-ekran-görüntüleri)
-- [Katkıda Bulunma](#-katkıda-bulunma)
+**ApiVerse**, farklı kategorilerdeki harici API'leri tek bir modern web platformunda birleştiren, üzerine **GPT-4o tabanlı yapay zeka analiz katmanı** entegre edilmiş çok modüllü bir ASP.NET Core uygulamasıdır.
 
----
+Proje iki ana katmandan oluşmaktadır:
 
-## 🎯 Proje Hakkında
+**ApiVerse.Api** (Web API Backend):
+- Tüm harici API çağrılarını yönetir
+- GPT-4o ile AI analiz üretir
+- MassTransit ile asenkron mesaj kuyruğu işler
+- UI katmanına veri sağlar
 
-**ApiVerse**, farklı kategorilerde çeşitli harici API'leri (kripto para, GitHub, kitap, müzik, iş ilanları) tek bir modern web platformunda birleştiren, üzerine GPT-4o tabanlı AI analiz katmanı eklenmiş çok modüllü bir ASP.NET Core uygulamasıdır.
-
-Proje; **ApiVerse.Api** (Web API backend) ve **ApiVerse.UI** (ASP.NET Core MVC frontend) olmak üzere iki ana projeden oluşmaktadır. Modüller arası iletişim **MassTransit** ile mesaj bazlı bir mimariyle yönetilmektedir.
+**ApiVerse.UI** (ASP.NET Core MVC Frontend):
+- Razor Views ile dinamik sayfalar sunar
+- Her modülü ayrı bölüm olarak listeler
+- AI'dan dönen HTML içeriği render eder
+- Kullanıcıya interaktif arayüz sağlar
 
 ---
 
-## ✨ Özellikler
+## 🚀 Kullanılan Teknolojiler
 
-| Özellik | Açıklama |
-|---|---|
-| 🔌 Çoklu API Entegrasyonu | Kripto, GitHub, Books, Spotify, Jobs API desteği |
-| 🤖 AI Destekli Analiz | GPT-4o ile modül bazlı içerik analizi ve önerileri |
-| 📨 Mesaj Kuyruğu | MassTransit ile asenkron mesajlaşma altyapısı |
-| 🎨 Modern UI | Razor Views ile dinamik, responsive arayüzler |
-| 🔒 Güvenli Yapı | API Key yönetimi, environment-based config |
-| 📊 Gerçek Zamanlı Veri | Anlık kripto fiyatları, trending repolar, playlist verileri |
+| Katman | Teknolojiler |
+|--------|-------------|
+| **Backend** | `ASP.NET Core Web API`, `C#`, `HttpClient`, `MassTransit` |
+| **Frontend** | `ASP.NET Core MVC`, `Razor Views`, `Bootstrap 5`, `JavaScript`, `jQuery` |
+| **Yapay Zeka** | `OpenAI GPT-4o`, `Prompt Engineering`, `HTML Formatlı AI Çıktısı` |
+| **Mimari** | `MVC Pattern`, `Service Layer`, `Dependency Injection`, `Message Bus` |
+| **Harici API'ler** | `CoinGecko`, `GitHub REST API`, `Google Books`, `Spotify Web API`, `Adzuna` |
 
 ---
 
-## 🏗️ Mimari
+## 🧱 Proje Yapısı
 
 ```
 ApiVerse/
 │
-├── ApiVerse.Api/                    # Web API Backend
-│   ├── Controllers/                 # API endpoint controller'ları
+├── 📁 ApiVerse.Api/                      → Web API Backend
+│   ├── Controllers/                      → API Endpoint Controller'ları
 │   │   ├── CryptoController.cs
 │   │   ├── GitHubController.cs
 │   │   ├── BooksController.cs
 │   │   ├── SpotifyController.cs
 │   │   └── JobsController.cs
-│   ├── Services/                    # İş mantığı servisleri
-│   │   ├── OpenAIService.cs         # GPT-4o entegrasyonu
+│   ├── Services/                         → İş Mantığı Servisleri
+│   │   ├── OpenAIService.cs              → GPT-4o Entegrasyonu
 │   │   ├── CryptoService.cs
 │   │   ├── GitHubService.cs
-│   │   └── ...
-│   ├── Models/                      # DTO ve domain modelleri
-│   ├── Consumers/                   # MassTransit consumer'ları
+│   │   ├── BooksService.cs
+│   │   ├── SpotifyService.cs
+│   │   └── JobsService.cs
+│   ├── Models/                           → DTO ve Domain Modelleri
+│   ├── Consumers/                        → MassTransit Consumer'ları
 │   └── Program.cs
 │
-├── ApiVerse.UI/                     # ASP.NET Core MVC Frontend
-│   ├── Controllers/                 # MVC controller'ları
-│   ├── Views/                       # Razor view'ları
+├── 📁 ApiVerse.UI/                       → ASP.NET Core MVC Frontend
+│   ├── Controllers/                      → MVC Controller'ları
+│   ├── Views/                            → Razor View'ları
 │   │   ├── Crypto/
 │   │   ├── GitHub/
 │   │   ├── Books/
 │   │   ├── Spotify/
 │   │   └── Jobs/
-│   ├── wwwroot/                     # Statik dosyalar (CSS, JS, img)
+│   ├── wwwroot/                          → Statik Dosyalar (CSS, JS, img)
 │   └── Program.cs
 │
-└── ApiVerse.sln
+├── ApiVerse.sln
+├── .gitignore
+└── .gitattributes
 ```
 
-> 📸 **Mimari Diyagram**
->
-> ![Architecture Diagram](https://via.placeholder.com/900x450/1a1a2e/ffffff?text=📸+Mimari+Diyagram+Ekran+Görüntüsü+Buraya)
+---
+
+## 🏗 Mimari Yapı
+
+```
+┌─────────────────────────────────────────┐
+│   📱 Presentation Layer (MVC Views)     │
+│   - Razor Views                         │
+│   - Bootstrap 5 UI                      │
+│   - JavaScript / AJAX                   │
+└──────────────┬──────────────────────────┘
+               │
+               ↓
+┌─────────────────────────────────────────┐
+│   🔌 API Layer (Web API Controllers)    │
+│   - Harici API Çağrıları                │
+│   - HttpClient Yönetimi                 │
+│   - Request / Response Modelleme        │
+└──────────────┬──────────────────────────┘
+               │
+               ↓
+┌─────────────────────────────────────────┐
+│   📨 Messaging Layer (MassTransit)      │
+│   - Asenkron Mesaj Kuyruğu              │
+│   - Producer / Consumer Pattern         │
+│   - Modüller Arası İletişim             │
+└──────────────┬──────────────────────────┘
+               │
+               ↓
+┌─────────────────────────────────────────┐
+│   🤖 AI Layer (OpenAI GPT-4o)           │
+│   - Modül Bazlı Özel Prompt'lar         │
+│   - HTML Formatlı Yapılandırılmış Çıktı │
+│   - Razor @Html.Raw() ile Render        │
+└─────────────────────────────────────────┘
+```
 
 ---
 
-## 🛠️ Teknoloji Stack'i
+## 🤖 Yapay Zeka Entegrasyonu
 
-### Backend
-| Teknoloji | Versiyon | Kullanım Amacı |
-|---|---|---|
-| ASP.NET Core | 8.0 | Web API & MVC framework |
-| C# | 12.0 | Ana programlama dili |
-| MassTransit | 8.x | Mesaj kuyruğu / asenkron iletişim |
-| HttpClient | Built-in | Harici API çağrıları |
-| OpenAI SDK | Latest | GPT-4o AI analiz entegrasyonu |
+**ApiVerse**'in en öne çıkan özelliği, her modüle ayrı ayrı entegre edilmiş GPT-4o tabanlı yapay zeka katmanıdır:
 
-### Frontend
-| Teknoloji | Kullanım Amacı |
-|---|---|
-| Razor Views | Server-side rendering |
-| Bootstrap 5 | Responsive UI framework |
-| JavaScript / jQuery | Dinamik UI etkileşimleri |
-| HTML5 / CSS3 | Sayfa yapısı ve stiller |
-
-### Harici API'ler
-| API | Modül | Açıklama |
-|---|---|---|
-| CoinGecko / Binance | Kripto | Kripto para fiyatları ve verileri |
-| GitHub REST API | GitHub | Trending repolar, dil filtresi |
-| Google Books API | Kitaplar | Kitap arama ve öneri sistemi |
-| Spotify Web API | Müzik | Playlist ve şarkı verileri |
-| Adzuna API | İş İlanları | Türkiye'deki iş ilanı listelemeleri |
-| OpenAI GPT-4o | AI Analiz | Tüm modüller için AI içerik analizi |
+- 📊 **Kripto Analizi** — Piyasa verilerini yorumlar, yatırım değerlendirmesi üretir
+- 📚 **Kitap Önerisi** — Kullanıcı tercihlerine göre kişiselleştirilmiş kitap önerir
+- 💼 **İlan Analizi** — İş ilanlarını pozisyon uygunluğuna göre değerlendirir
+- 🌐 **HTML Çıktı** — AI yanıtları doğrudan HTML formatında üretilerek Razor View içinde render edilir
+- ⚡ **MassTransit ile Asenkron** — Tüm AI istekleri mesaj kuyruğu üzerinden yönetilir
 
 ---
 
-## 📦 Modüller
+# 📦 MODÜLLER
 
-### 💰 Kripto Para Modülü
+---
 
-Anlık kripto para fiyatlarını, değişim oranlarını ve piyasa verilerini getiren modül. GPT-4o entegrasyonu sayesinde piyasa analizi ve yatırım yorumları da sunulmaktadır.
+## 1. Kripto Para Modülü
+
+**Yol:** `/Crypto/Index`
+
+**Açıklama:**
+Anlık kripto para fiyatlarını, 24 saatlik değişim oranlarını ve piyasa verilerini listeleyen modül. GPT-4o entegrasyonu ile piyasa analizi ve yorum üretimi de sağlanmaktadır.
 
 **Özellikler:**
-- Anlık fiyat verileri (BTC, ETH, vb.)
-- 24 saatlik değişim oranları
-- Piyasa hacmi ve sıralama bilgileri
-- **AI destekli piyasa analizi** (GPT-4o ile HTML formatında çıktı)
+- 💰 **Anlık Fiyat Verileri** — BTC, ETH ve diğer kripto paraların güncel fiyatları
+- 📈 **24 Saatlik Değişim** — Yüzdelik değişim oranları (yeşil/kırmızı renk kodlaması)
+- 🏆 **Piyasa Sıralama** — Market cap sıralaması ve hacim bilgileri
+- 🤖 **AI Piyasa Analizi** — GPT-4o ile üretilmiş piyasa yorumu ve değerlendirme (HTML çıktı)
 
-> 📸 **Kripto Modülü Ekran Görüntüsü**
+> 📸 **Kripto Para Listesi**
 >
-> ![Crypto Module](https://via.placeholder.com/900x500/1a1a2e/f7931a?text=📸+Kripto+Modülü+Ekran+Görüntüsü+Buraya)
+> ![Kripto Para Listesi](https://via.placeholder.com/900x500/0d1117/f7931a?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
 
-> 📸 **AI Kripto Analiz Çıktısı**
+> 📸 **GPT-4o Piyasa Analizi Çıktısı**
 >
-> ![Crypto AI Analysis](https://via.placeholder.com/900x400/1a1a2e/412991?text=📸+GPT-4o+Kripto+Analiz+Çıktısı+Buraya)
+> ![AI Kripto Analizi](https://via.placeholder.com/900x400/0d1117/412991?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
 
 ---
 
-### 🐙 GitHub Trending Modülü
+## 2. GitHub Trending Modülü
 
-GitHub üzerindeki günlük ve haftalık trend repoları listeleyen, dil bazlı filtreleme destekleyen modül.
+**Yol:** `/GitHub/Trending`
+
+**Açıklama:**
+GitHub üzerindeki günlük ve haftalık trend repoları listeleyen, dil bazlı filtreleme destekleyen modül. GitHub REST API ve URL encoding ile C#, Python, JavaScript gibi dil filtrelemeleri yapılmaktadır.
 
 **Özellikler:**
-- Günlük / haftalık trending repolar
-- **Dil bazlı filtreleme** (C#, Python, JavaScript vb.)
-- Repo detayları (star, fork, açıklama)
-- Geliştirici profil widget'ları
-- URL encoding ile özel dil filtresi desteği
+- 🔥 **Günlük / Haftalık Trending** — Zaman aralığına göre en popüler repolar
+- 🗂️ **Dil Bazlı Filtreleme** — C#, Python, JavaScript, Go vb. dil seçimi (URL encoding destekli)
+- ⭐ **Repo Detayları** — Star sayısı, fork, açıklama ve dil bilgisi
+- 🧑‍💻 **Geliştirici Widget'ı** — Repo sahibine ait profil bilgileri
 
-> 📸 **GitHub Trending Modülü Ekran Görüntüsü**
+> 📸 **GitHub Trending Listesi**
 >
-> ![GitHub Module](https://via.placeholder.com/900x500/1a1a2e/24292e?text=📸+GitHub+Trending+Modülü+Ekran+Görüntüsü+Buraya)
+> ![GitHub Trending](https://via.placeholder.com/900x500/0d1117/24292e?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
 
-> 📸 **Dil Filtreleme Ekran Görüntüsü**
+> 📸 **Dil Filtresi Seçimi**
 >
-> ![GitHub Language Filter](https://via.placeholder.com/900x400/1a1a2e/24292e?text=📸+Dil+Filtresi+Ekran+Görüntüsü+Buraya)
+> ![Dil Filtresi](https://via.placeholder.com/900x400/0d1117/24292e?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
 
 ---
 
-### 📚 Google Books Modülü
+## 3. Google Books Modülü
 
-Google Books API ile kitap arama, öneri ve listeleme işlemleri yapan modül.
+**Yol:** `/Books/Index`
+
+**Açıklama:**
+Google Books API ile kitap arama, listeleme ve öneri yapabilen modül. Kullanıcılar anahtar kelime veya kategori ile kitap arayabilir; GPT-4o ile kişiselleştirilmiş öneri alabilir.
 
 **Özellikler:**
-- Anahtar kelime ile kitap arama
-- Kategori bazlı listeleme
-- Kitap detay sayfaları (yazar, yayınevi, ISBN, önizleme linki)
-- **AI destekli kitap önerisi** (GPT-4o ile kişiselleştirilmiş öneri)
-
-> 📸 **Google Books Modülü Ekran Görüntüsü**
->
-> ![Books Module](https://via.placeholder.com/900x500/1a1a2e/4285F4?text=📸+Google+Books+Modülü+Ekran+Görüntüsü+Buraya)
+- 🔍 **Kitap Arama** — Başlık, yazar veya ISBN ile arama
+- 🏷️ **Kategori Bazlı Listeleme** — Türe göre filtrelenmiş kitap listesi
+- 📖 **Kitap Detayı** — Yazar, yayınevi, sayfa sayısı, ISBN, önizleme linki
+- 🤖 **AI Kitap Önerisi** — Tercihlerinize göre GPT-4o destekli kişisel öneri
 
 > 📸 **Kitap Arama Sonuçları**
 >
-> ![Books Search](https://via.placeholder.com/900x400/1a1a2e/4285F4?text=📸+Kitap+Arama+Ekran+Görüntüsü+Buraya)
+> ![Google Books](https://via.placeholder.com/900x500/0d1117/4285F4?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
+
+> 📸 **Kitap Detay Sayfası**
+>
+> ![Kitap Detay](https://via.placeholder.com/900x400/0d1117/4285F4?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
 
 ---
 
-### 🎵 Spotify Modülü
+## 4. Spotify Modülü
 
-Spotify Web API ile Türkiye Top-50 ve diğer playlist verilerini çeken, şarkı bilgilerini listeleyen modül.
+**Yol:** `/Spotify/Index`
+
+**Açıklama:**
+Spotify Web API ile Türkiye Top-50 ve çeşitli playlist verilerini çeken modül. Şarkı, sanatçı ve albüm bilgileri listelenmekte, Spotify bağlantıları sağlanmaktadır. Client Credentials Flow ile otomatik token yönetimi yapılmaktadır.
 
 **Özellikler:**
-- Türkiye Top-50 playlist verileri
-- Şarkı, sanatçı, albüm bilgileri
-- Spotify'da dinleme linkleri
-- Client Credentials Flow ile token yönetimi
+- 🇹🇷 **Türkiye Top-50** — Türkiye günlük en çok dinlenen şarkılar
+- 🎵 **Şarkı & Sanatçı Bilgisi** — Albüm kapağı, sanatçı adı, şarkı ismi
+- 🔗 **Spotify Linki** — Şarkıyı Spotify'da dinlemek için yönlendirme
+- 🔑 **Token Yönetimi** — Client Credentials Flow ile otomatik erişim token'ı
 
-> 📸 **Spotify Modülü Ekran Görüntüsü**
+> 📸 **Türkiye Top-50 Listesi**
 >
-> ![Spotify Module](https://via.placeholder.com/900x500/1a1a2e/1DB954?text=📸+Spotify+Modülü+Ekran+Görüntüsü+Buraya)
+> ![Spotify Top 50](https://via.placeholder.com/900x500/0d1117/1DB954?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
 
-> 📸 **Playlist Listesi Ekran Görüntüsü**
+> 📸 **Playlist Görünümü**
 >
-> ![Spotify Playlist](https://via.placeholder.com/900x400/1a1a2e/1DB954?text=📸+Playlist+Görünümü+Ekran+Görüntüsü+Buraya)
+> ![Spotify Playlist](https://via.placeholder.com/900x400/0d1117/1DB954?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
 
 ---
 
-### 💼 İş İlanları Modülü
+## 5. İş İlanları Modülü
 
-Adzuna API kullanılarak Türkiye'deki güncel iş ilanlarını listeleyen ve filtreleyen modül.
+**Yol:** `/Jobs/Index`
+
+**Açıklama:**
+Adzuna API kullanılarak Türkiye'deki güncel iş ilanlarını listeleyen ve filtreleyen modül. Şehir ve kategori bazlı filtreleme, sayfalama ve AI destekli ilan analizi özelliklerine sahiptir.
 
 **Özellikler:**
-- Şehir ve kategori bazlı filtreleme
-- İlan detayları (şirket, konum, maaş aralığı)
-- Sayfalama (pagination) desteği
-- **AI destekli ilan analizi** (pozisyon uygunluk değerlendirmesi)
+- 🏙️ **Şehir & Kategori Filtresi** — İstanbul, Ankara gibi şehir bazlı ve kategori bazlı filtreleme
+- 🏢 **İlan Detayları** — Şirket adı, konum, maaş aralığı, iş tanımı
+- 📄 **Sayfalama** — Büyük ilan listeleri için pagination desteği
+- 🤖 **AI İlan Değerlendirmesi** — GPT-4o ile pozisyon uygunluk analizi
 
-> 📸 **İş İlanları Modülü Ekran Görüntüsü**
+> 📸 **İş İlanları Listesi**
 >
-> ![Jobs Module](https://via.placeholder.com/900x500/1a1a2e/0077B5?text=📸+İş+İlanları+Modülü+Ekran+Görüntüsü+Buraya)
+> ![İş İlanları](https://via.placeholder.com/900x500/0d1117/0077B5?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
 
-> 📸 **Filtreleme Ekran Görüntüsü**
+> 📸 **Şehir / Kategori Filtresi**
 >
-> ![Jobs Filter](https://via.placeholder.com/900x400/1a1a2e/0077B5?text=📸+İş+İlanı+Filtresi+Ekran+Görüntüsü+Buraya)
+> ![İş İlanı Filtresi](https://via.placeholder.com/900x400/0d1117/0077B5?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
 
 ---
 
-### 🤖 AI Analiz Katmanı
+## 6. AI Analiz Katmanı
 
-Tüm modüllere entegre edilmiş GPT-4o destekli analiz katmanı. Her modüldeki veri, OpenAI API'ye gönderilerek anlamlı HTML formatında sonuçlar üretilmekte ve Razor View'larında render edilmektedir.
+**Yol:** Her modülün `/Analyze` endpoint'i
+
+**Açıklama:**
+Tüm modüllere entegre edilmiş GPT-4o destekli analiz katmanı. Modülden gelen veri OpenAI API'ye gönderilir; üretilen HTML çıktı Razor View içinde `@Html.Raw()` ile render edilir.
 
 **Özellikler:**
-- Modül bazında özelleştirilmiş prompt'lar
-- HTML formatında yapılandırılmış AI çıktısı
-- Razor `@Html.Raw()` ile güvenli render
-- MassTransit üzerinden asenkron AI istek yönetimi
+- 🧠 **Modül Bazlı Prompt** — Her modül için özelleştirilmiş system prompt
+- 🌐 **HTML Formatlı Çıktı** — AI yanıtı doğrudan HTML olarak üretilir, sayfaya render edilir
+- 📨 **MassTransit ile Asenkron** — AI istekleri message bus üzerinden yönetilir
+- ⚡ **Hızlı Yanıt** — Streaming olmadan yapılandırılmış tek yanıt modeli
 
-**Örnek Akış:**
+**AI Akış Diyagramı:**
 ```
-Kullanıcı İsteği
-      ↓
-MVC Controller
-      ↓
-MassTransit Message Bus
-      ↓
-ApiVerse.Api → OpenAI GPT-4o
-      ↓
-HTML Formatlı Yanıt
-      ↓
-Razor View Render
+Kullanıcı → MVC Controller → MassTransit Bus
+                                    ↓
+                            ApiVerse.Api Consumer
+                                    ↓
+                            OpenAI GPT-4o
+                                    ↓
+                            HTML Formatlı Yanıt
+                                    ↓
+                            Razor @Html.Raw() Render
 ```
 
 > 📸 **AI Analiz Çıktısı Örneği**
 >
-> ![AI Analysis Output](https://via.placeholder.com/900x500/1a1a2e/412991?text=📸+AI+Analiz+Çıktısı+Ekran+Görüntüsü+Buraya)
+> ![AI Analiz](https://via.placeholder.com/900x500/0d1117/412991?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
 
 ---
 
-## 🚀 Kurulum
+## ⚙️ Kurulum ve Çalıştırma
 
 ### Gereksinimler
 
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- [Visual Studio 2022](https://visualstudio.microsoft.com/) veya [VS Code](https://code.visualstudio.com/)
-- (Opsiyonel) [RabbitMQ](https://www.rabbitmq.com/) — MassTransit transport için
+- .NET 8.0 SDK
+- Visual Studio 2022 veya VS Code
+- (Opsiyonel) RabbitMQ — MassTransit transport için
 
-### 1. Repoyu Klonlayın
+### Adımlar
 
 ```bash
+# 1. Repoyu klonla
 git clone https://github.com/BerkayGenceroglu/ApiVerse.git
+
+# 2. Proje dizinine git
 cd ApiVerse
-```
 
-### 2. API Anahtarlarını Ayarlayın
+# 3. appsettings.json dosyalarını yapılandır
+# ApiVerse.Api ve ApiVerse.UI için API anahtarlarını ekle
 
-`ApiVerse.Api/appsettings.json` ve `ApiVerse.UI/appsettings.json` dosyalarını doldurun (bkz. [Yapılandırma](#-yapılandırma)).
-
-### 3. Bağımlılıkları Yükleyin
-
-```bash
-# API projesi
-cd ApiVerse.Api
-dotnet restore
-
-# UI projesi
-cd ../ApiVerse.UI
-dotnet restore
-```
-
-### 4. Projeleri Çalıştırın
-
-Önce **API** projesini başlatın:
-
-```bash
+# 4. API projesini çalıştır
 cd ApiVerse.Api
 dotnet run
-# API: https://localhost:7001
-```
+# → https://localhost:7001
 
-Ardından **UI** projesini başlatın:
-
-```bash
+# 5. UI projesini çalıştır (yeni terminal)
 cd ApiVerse.UI
 dotnet run
-# UI: https://localhost:7000
+# → https://localhost:7000
 ```
 
-> 💡 **Visual Studio kullanıyorsanız:** Solution'ı açın, birden fazla başlangıç projesi olarak `ApiVerse.Api` ve `ApiVerse.UI`yi seçin ve F5 ile çalıştırın.
-
-> 📸 **Kurulum Adımları Ekran Görüntüsü**
->
-> ![Setup Screenshot](https://via.placeholder.com/900x400/1a1a2e/28a745?text=📸+Kurulum+Ekran+Görüntüsü+Buraya)
+> 💡 **Visual Studio kullanıyorsanız:** Solution'ı açın, her iki projeyi de başlangıç projesi olarak seçip F5 ile çalıştırın.
 
 ---
 
-## ⚙️ Yapılandırma
+## 🔧 Yapılandırma
 
 ### ApiVerse.Api — `appsettings.json`
 
@@ -344,12 +335,6 @@ dotnet run
   "Adzuna": {
     "AppId": "your_adzuna_app_id",
     "AppKey": "your_adzuna_app_key"
-  },
-  "MassTransit": {
-    "Host": "localhost",
-    "VirtualHost": "/",
-    "Username": "guest",
-    "Password": "guest"
   }
 }
 ```
@@ -368,112 +353,27 @@ dotnet run
 
 ---
 
-## 📖 API Dokümantasyonu
-
-### Base URL
-
-```
-https://localhost:7001/api
-```
-
-### Endpoints
-
-#### 💰 Kripto
-
-| Method | Endpoint | Açıklama |
-|---|---|---|
-| `GET` | `/crypto/list` | Tüm kripto para listesi |
-| `GET` | `/crypto/{symbol}` | Belirli kripto detayı |
-| `POST` | `/crypto/analyze` | GPT-4o ile piyasa analizi |
-
-#### 🐙 GitHub
-
-| Method | Endpoint | Açıklama |
-|---|---|---|
-| `GET` | `/github/trending` | Günlük trending repolar |
-| `GET` | `/github/trending?language=C%23` | Dil bazlı filtreleme |
-| `GET` | `/github/trending?since=weekly` | Haftalık trending |
-
-#### 📚 Books
-
-| Method | Endpoint | Açıklama |
-|---|---|---|
-| `GET` | `/books/search?q={query}` | Kitap arama |
-| `GET` | `/books/{id}` | Kitap detayı |
-| `POST` | `/books/recommend` | AI kitap önerisi |
-
-#### 🎵 Spotify
-
-| Method | Endpoint | Açıklama |
-|---|---|---|
-| `GET` | `/spotify/top50` | Türkiye Top-50 listesi |
-| `GET` | `/spotify/playlist/{id}` | Playlist detayı |
-
-#### 💼 Jobs
-
-| Method | Endpoint | Açıklama |
-|---|---|---|
-| `GET` | `/jobs/list` | İş ilanları listesi |
-| `GET` | `/jobs/list?location=Istanbul` | Şehir bazlı ilanlar |
-| `POST` | `/jobs/analyze` | AI ilan analizi |
-
-> 📸 **Swagger UI Ekran Görüntüsü**
->
-> ![Swagger UI](https://via.placeholder.com/900x500/1a1a2e/85ea2d?text=📸+Swagger+UI+Ekran+Görüntüsü+Buraya)
-
----
-
-## 📸 Ekran Görüntüleri
-
-### Ana Sayfa
-
-> ![Homepage](https://via.placeholder.com/900x550/1a1a2e/6c63ff?text=📸+Ana+Sayfa+Ekran+Görüntüsü+Buraya)
-
-### Dashboard Genel Görünüm
-
-> ![Dashboard](https://via.placeholder.com/900x550/1a1a2e/6c63ff?text=📸+Dashboard+Genel+Ekran+Görüntüsü+Buraya)
-
-### Mobil Görünüm
-
-> ![Mobile View](https://via.placeholder.com/400x750/1a1a2e/6c63ff?text=📸+Mobil+Görünüm+Ekran+Görüntüsü+Buraya)
-
----
-
-## 🤝 Katkıda Bulunma
-
-1. Bu repoyu fork'layın
-2. Feature branch oluşturun: `git checkout -b feature/yeni-modul`
-3. Değişikliklerinizi commit edin: `git commit -m 'feat: yeni modül eklendi'`
-4. Branch'i push edin: `git push origin feature/yeni-modul`
-5. Pull Request açın
-
----
-
 ## 👤 Geliştirici
-
-<div align="center">
 
 **Berkay Gençeroğlu**
 
-[![GitHub](https://img.shields.io/badge/GitHub-BerkayGenceroglu-181717?style=for-the-badge&logo=github)](https://github.com/BerkayGenceroglu)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Berkay_Gençeroğlu-0077B5?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/BerkayGenceroglu)
-
-*Üsküdar Üniversitesi — Bilgisayar Mühendisliği*
-
-</div>
+- GitHub: [@BerkayGenceroglu](https://github.com/BerkayGenceroglu)
+- LinkedIn: [Berkay Gençeroğlu](https://www.linkedin.com/in/berkay-gencero%C4%9Flu-586b52331/)
 
 ---
 
-## 📄 Lisans
+## 📫 İletişim
 
-Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
+Proje hakkında sorularınız, önerileriniz ya da katkı istekleriniz için benimle iletişime geçebilirsiniz:
+
+- 📧 E-posta: **berkaygenceroglu6@gmail.com**
+- 🔗 LinkedIn: [Berkay Gençeroğlu](https://www.linkedin.com/in/berkay-gencero%C4%9Flu-586b52331/)
 
 ---
 
-<div align="center">
+## 💬 Son Söz
 
-⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!
+Teşekkürler! Bu projeyi incelediğiniz için memnuniyet duyarım.  
+Her türlü geri bildirime açığım.
 
-Made with ❤️ using ASP.NET Core & OpenAI GPT-4o
-
-</div>
+**İyi kodlamalar! 🚀**
