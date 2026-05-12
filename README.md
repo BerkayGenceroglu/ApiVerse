@@ -352,7 +352,8 @@ Güncel akaryakıt fiyatlarını anlık olarak takip eden ve GPT-4o destekli yap
 
 ### 📸 Yakıt Fiyatları ve  AI Tahmin & Analiz Paneli
 
-<img width="1800" height="1544" alt="fuel" src="https://github.com/user-attachments/assets/0bf7d558-5319-4b41-8bc4-efb107412d94" />
+<img width="1216" height="637" alt="image" src="https://github.com/user-attachments/assets/99d87534-e2d7-486e-8559-3cc570f3ea3c" />
+
 
 
 ---
