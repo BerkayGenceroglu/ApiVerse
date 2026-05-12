@@ -1,0 +1,58 @@
+﻿@model List<ApiVerse.Api.Models.FootballModels.FixtureMatch>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="text-center py-5">
+        <i class="fa-solid fa-calendar-xmark fa-3x text-muted mb-3"></i>
+        <p class="text-muted">Bu hafta için maç bulunamadı.</p>
+    </div>
+}
+else
+{
+    <div class="row g-3">
+        @foreach (var match in Model)
+        {
+            var date = DateTime.Parse(match.Status.UtcTime).ToLocalTime();
+
+            <div class="col-12">
+                <div style="background: #fff; border-radius: 20px; padding: 1.2rem 1.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.04);">
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div class="text-end" style="width: 38%">
+                            <span class="fw-bold" style="font-size: 0.95rem;">@match.Home.Name</span>
+                        </div>
+
+                        <div class="text-center" style="width: 24%">
+                            @if (match.Status.Finished)
+                            {
+                                <div style="background: #222e3e; color: #fff; border-radius: 12px; padding: 6px 14px; font-weight: 700; font-size: 1rem; display: inline-block;">
+                                    @match.Status.ScoreStr
+                                </div>
+                                <div class="text-muted mt-1" style="font-size: 0.75rem;">@date.ToString("dd MMM · HH:mm")</div>
+                            }
+                            else if (match.NotStarted)
+                            {
+                                <div style="background: #f1f5f9; color: #222e3e; border-radius: 12px; padding: 6px 14px; font-weight: 700; font-size: 1rem; display: inline-block;">
+                                    @date.ToString("HH:mm")
+                                </div>
+                                <div class="text-muted mt-1" style="font-size: 0.75rem;">@date.ToString("dd MMM yyyy")</div>
+                            }
+                            else
+                            {
+                                <div style="background: #ef4444; color: #fff; border-radius: 12px; padding: 6px 14px; font-weight: 700; font-size: 1rem; display: inline-block;">
+                                    @match.Status.ScoreStr
+                                </div>
+                                <div class="text-muted mt-1" style="font-size: 0.75rem;">Canlı</div>
+                            }
+                        </div>
+
+                        <div class="text-start" style="width: 38%">
+                            <span class="fw-bold" style="font-size: 0.95rem;">@match.Away.Name</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

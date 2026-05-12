@@ -1,0 +1,281 @@
+﻿@model ApiVerse.UI.Models.ProfileViewModel
+@using System.Linq
+
+@{
+    ViewData["Title"] = "Profilimi Düzenle";
+    Layout = "~/Views/ApiVerseLayout/Layout.cshtml";
+}
+
+<style>
+    .profile-wrapper {
+        max-width: 860px;
+        margin: 0 auto;
+    }
+
+    /* Hero Section */
+    .profile-hero {
+        background: #222e3e;
+        border-radius: 32px;
+        padding: 3rem;
+        display: flex;
+        align-items: center;
+        gap: 2.5rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-wrap {
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    .avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid rgba(255,255,255,0.15);
+    }
+
+    .avatar-placeholder {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        font-weight: 800;
+        color: #fff;
+    }
+
+    /* Form Styles */
+    .update-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    .photo-upload-zone {
+        background: #f8fafc;
+        border: 2px dashed #e2e8f0;
+        border-radius: 20px;
+        padding: 1.5rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        transition: all 0.2s ease;
+    }
+
+        .photo-upload-zone:hover {
+            border-color: #222e3e;
+            background: #f1f5f9;
+        }
+
+    .form-label-custom {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #94a3b8;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .form-input-custom {
+        width: 100%;
+        border-radius: 12px;
+        border: 1.5px solid #e2e8f0;
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+        .form-input-custom:focus {
+            border-color: #222e3e;
+        }
+
+    .btn-save-main {
+        background: #222e3e;
+        color: #fff;
+        border: none;
+        border-radius: 14px;
+        padding: 1rem;
+        font-weight: 700;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: transform 0.2s;
+    }
+
+        .btn-save-main:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+    .divider-text {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: #cbd5e1;
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin: 1.5rem 0;
+    }
+
+        .divider-text::after, .divider-text::before {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #f1f5f9;
+        }
+</style>
+
+<div class="profile-wrapper">
+
+    <!-- Hero Bölümü (Mevcut Durum) -->
+    <div class="profile-hero">
+        <div class="avatar-wrap">
+            @if (!string.IsNullOrEmpty(Model.PhotoPath))
+            {
+                <img class="avatar" src="@Model.PhotoPath" alt="Avatar" />
+            }
+            else
+            {
+                <div class="avatar-placeholder">
+                    @(Model.Name?.Substring(0, 1).ToUpper())@(Model.Surname?.Substring(0, 1).ToUpper())
+                </div>
+            }
+            <div style="position: absolute; bottom: 8px; right: 8px; width: 18px; height: 18px; background: #22c55e; border-radius: 50%; border: 3px solid #222e3e;"></div>
+        </div>
+
+        <div class="profile-info text-white">
+            <h2 style="font-weight: 800; margin: 0;">@Model.Name @Model.Surname</h2>
+            <p style="margin-bottom: 1rem;">
+                <span style="opacity:0.6;">Kullanıcı Adı:</span>
+                <span class="text-white">@Model.UserName</span>
+            </p>
+            <span style="background: rgba(34,197,94,0.2); color: #4ade80; padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">
+                <i class="fa-solid fa-shield-check me-1"></i> Doğrulanmış Hesap
+            </span>
+        </div>
+    </div>
+
+    <!-- Tek Form: Bilgiler + Fotoğraf -->
+    <div class="update-card">
+        <h5 style="font-weight: 800; color: #1e293b; margin-bottom: 2rem;">
+            <i class="fa-solid fa-sliders me-2"></i>Profil Ayarları
+        </h5>
+
+        <form method="post" asp-action="UpdateProfile" asp-controller="Profile" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <!-- Gizli ID alanı gerekebilir -->
+            <input type="hidden" asp-for="UserName" />
+
+            <!-- Fotoğraf Yükleme Alanı -->
+            <div class="photo-upload-zone">
+                <label class="form-label-custom" style="margin-bottom: 10px;">Profil Fotoğrafını Güncelle</label>
+                <div class="d-flex align-items-center justify-content-center gap-3">
+                    <div style="background: #fff; border: 1px solid #e2e8f0; padding: 8px; border-radius: 12px;">
+                        <i class="fa-solid fa-image-portrait fa-2x color-dark"></i>
+                    </div>
+                    <input type="file" name="PhotoFile" class="form-control" style="border-radius: 10px; font-size: 0.8rem;" accept="image/*" />
+                </div>
+                <small style="display:block; margin-top:10px; color: #94a3b8;">Sadece JPG, PNG. Maksimum 2MB.</small>
+            </div>
+
+            <div class="row g-4">
+                <!-- Ad Soyad -->
+                <div class="col-md-6">
+                    <label class="form-label-custom">Adınız</label>
+                    <input type="text" asp-for="Name" class="form-input-custom" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label-custom">Soyadınız</label>
+                    <input type="text" asp-for="Surname" class="form-input-custom" />
+                </div>
+
+                <!-- İletişim -->
+                <div class="col-md-6">
+                    <label class="form-label-custom">E-Posta Adresi</label>
+                    <input type="email" asp-for="Email" class="form-input-custom" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label-custom">Telefon Numarası</label>
+                    <input type="text" asp-for="PhoneNumber" class="form-input-custom" />
+                </div>
+
+                <div class="col-12">
+                    <div class="divider-text">Güvenlik ve Şifre</div>
+                </div>
+
+                <!-- Şifre -->
+                <div class="col-md-6">
+                    <label class="form-label-custom">Yeni Şifre</label>
+                    <input type="password" name="Password" placeholder="Değiştirmek istemiyorsanız boş bırakın" class="form-input-custom" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label-custom">Yeni Şifre (Tekrar)</label>
+                    <input type="password" name="PasswordAgain" placeholder="Tekrar yazın" class="form-input-custom" />
+                </div>
+
+                <!-- Buton -->
+                <div class="col-12 mt-5">
+                    <button type="submit" class="btn-save-main">
+                        <i class="fa-solid fa-circle-check"></i> Tüm Değişiklikleri Kaydet
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@* --- Bildirim Sistemi --- *@
+@if (TempData["Message"] != null)
+{
+    var type = TempData["Type"]?.ToString() ?? "info";
+    var bgColor = type == "success" ? "#dcfce7" : "#fee2e2";
+    var textColor = type == "success" ? "#16a34a" : "#dc2626";
+    var icon = type == "success" ? "fa-circle-check" : "fa-circle-exclamation";
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div style="background: @bgColor; color: @textColor; border-radius: 16px; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 12px; border: 1px solid rgba(0,0,0,0.05); font-weight: 600; animation: slideIn 0.3s ease-out;">
+                <i class="fa-solid @icon fa-lg"></i>
+                <span>@TempData["Message"]</span>
+                <button type="button" class="btn-close ms-auto" style="font-size: 0.7rem;" data-bs-dismiss="alert"></button>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    @@keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<script>
+    setTimeout(function() {
+        var alerts = document.querySelectorAll('.alert, [style*="background: #dcfce7"]');
+        alerts.forEach(function(alert) {
+            alert.style.transition = "opacity 0.5s ease";
+            alert.style.opacity = "0";
+            setTimeout(() => alert.remove(), 500);
+        });
+    }, 4000); // 4 saniye sonra kapanır
+</script>

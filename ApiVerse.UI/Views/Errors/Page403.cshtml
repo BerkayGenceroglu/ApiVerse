@@ -1,0 +1,140 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>403 - Yasaklı Alan 🚫</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at top, #1a1a2e, #0f0f1a);
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 140px;
+            margin: 0;
+            background: linear-gradient(90deg, #ff0000, #ff4d4d, #ffcc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 3s infinite alternate;
+        }
+
+        p {
+            font-size: 22px;
+            opacity: 0.85;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: #ff4d4d;
+            color: #000;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+            a:hover {
+                background: #ffcc00;
+                color: #000;
+            }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+            .stars span {
+                position: absolute;
+                width: 3px;
+                height: 3px;
+                background: white;
+                border-radius: 50%;
+                animation: moveStars 10s linear infinite;
+            }
+
+        @@keyframes moveStars {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        @@keyframes glow {
+            from {
+                filter: drop-shadow(0 0 10px #ff0000);
+            }
+
+            to {
+                filter: drop-shadow(0 0 25px #ffcc00);
+            }
+        }
+
+        .shield {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle at 30% 30%, #ff4d4d, #660000);
+            border-radius: 50%;
+            top: 20%;
+            left: 10%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @@keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(30px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars">
+        @for (int i = 0; i < 80; i++)
+        {
+            <span style="top:@(i * 2)% ; left:@(i * 3)% ; animation-duration:@(5 + i % 5)s"></span>
+        }
+    </div>
+
+    <div class="shield"></div>
+
+    <div class="container">
+        <h1>403</h1>
+        <p>🚫 Burası yasaklı bölge!</p>
+        <p>Bu sayfaya erişim iznin bulunmuyor.</p>
+        <a href="/">Ana Sayfaya Dön</a>
+    </div>
+
+</body>
+</html>

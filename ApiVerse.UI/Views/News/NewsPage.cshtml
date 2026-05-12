@@ -1,0 +1,369 @@
+﻿@model ResultNewsResult
+
+@{
+    ViewData["Title"] = "NewsPage";
+    Layout = "~/Views/ApiVerseLayout/Layout.cshtml";
+}
+
+
+
+<style>
+    .news-hero {
+        background: var(--primary-dark, #222e3e);
+        border-radius: 32px;
+        padding: 2.5rem 3rem;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+        .news-hero h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+
+        .news-hero p {
+            color: rgba(255,255,255,0.55);
+            margin: 0.25rem 0 0;
+            font-size: 0.95rem;
+        }
+
+    .search-form {
+        display: flex;
+        gap: 10px;
+    }
+
+        .search-form input {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 14px;
+            padding: 0.65rem 1.2rem;
+            color: #fff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.9rem;
+            width: 240px;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+            .search-form input::placeholder {
+                color: rgba(255,255,255,0.4);
+            }
+
+            .search-form input:focus {
+                border-color: rgba(255,255,255,0.4);
+            }
+
+        .search-form button {
+            background: #fff;
+            color: #222e3e;
+            border: none;
+            border-radius: 14px;
+            padding: 0.65rem 1.4rem;
+            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+            .search-form button:hover {
+                opacity: 0.85;
+            }
+
+    .news-meta {
+        font-size: 0.82rem;
+        color: #94a3b8;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+    }
+
+    .news-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+    }
+
+    /* İlk haber büyük */
+    .news-card:first-child {
+        grid-column: span 3;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border-radius: 24px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        min-height: 320px;
+    }
+
+        .news-card:first-child .card-img {
+            border-radius: 0;
+            height: 100%;
+            min-height: 320px;
+        }
+
+            .news-card:first-child .card-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .news-card:first-child .card-body {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .news-card:first-child .card-title {
+            font-size: 1.4rem;
+            line-height: 1.4;
+            -webkit-line-clamp: 4;
+        }
+
+    /* Normal kartlar */
+    .news-card {
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .news-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+        }
+
+        .news-card:first-child:hover {
+            transform: translateY(-4px);
+        }
+
+    .card-img {
+        height: 190px;
+        overflow: hidden;
+    }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+    .news-card:hover .card-img img {
+        transform: scale(1.04);
+    }
+
+    .card-img-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #e2e8f0 0%, #f1f5f9 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #94a3b8;
+        font-size: 2rem;
+    }
+
+    .card-body {
+        padding: 1.25rem 1.5rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        flex: 1;
+    }
+
+    .card-source {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .source-badge {
+        background: #f1f5f9;
+        color: #475569;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 8px;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+    }
+
+    .date-text {
+        font-size: 0.75rem;
+        color: #94a3b8;
+        font-weight: 500;
+    }
+
+    .card-title {
+        font-size: 0.97rem;
+        font-weight: 700;
+        color: #222e3e;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin: 0;
+    }
+
+    .card-desc {
+        font-size: 0.83rem;
+        color: #64748b;
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin: 0;
+    }
+
+    .card-link {
+        margin-top: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: #222e3e;
+        text-decoration: none;
+        border-top: 1px solid #f1f5f9;
+        padding-top: 0.85rem;
+        transition: gap 0.2s;
+    }
+
+        .card-link:hover {
+            gap: 10px;
+            color: #222e3e;
+        }
+
+    .no-data {
+        grid-column: span 3;
+        text-align: center;
+        padding: 4rem;
+        color: #94a3b8;
+    }
+
+        .no-data i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+    @@media (max-width: 1100px) {
+        .news-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .news-card:first-child {
+            grid-column: span 2;
+        }
+
+        .no-data {
+            grid-column: span 2;
+        }
+    }
+
+    @@media (max-width: 700px) {
+        .news-hero {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.5rem;
+        }
+
+        .news-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .news-card:first-child {
+            grid-column: span 1;
+            grid-template-columns: 1fr;
+        }
+
+            .news-card:first-child .card-img {
+                min-height: 200px;
+            }
+
+        .no-data {
+            grid-column: span 1;
+        }
+    }
+</style>
+
+<!-- Hero & Arama -->
+<div class="news-hero">
+    <div>
+        <h1><i class="fa-solid fa-newspaper me-2"></i>Haber Akışı</h1>
+        <p>Türkiye'den ve dünyadan güncel haberler</p>
+    </div>
+    <form class="search-form" method="get" action="/News/NewsPage">
+        <input type="text" name="query" placeholder="Haber ara..." value="@Context.Request.Query["query"]" />
+        <button type="submit"><i class="fa-solid fa-magnifying-glass me-1"></i>Ara</button>
+    </form>
+</div>
+
+<!-- Toplam haber sayısı -->
+@if (Model != null && Model.articles != null)
+{
+    <p class="news-meta">
+        <i class="fa-solid fa-circle-check me-1" style="color:#22c55e"></i>
+        Toplam <strong>@Model.totalArticles.ToString("N0")</strong> haber bulundu
+    </p>
+}
+
+<!-- Haber Grid -->
+<div class="news-grid">
+    @if (Model == null || Model.articles == null || Model.articles.Length == 0)
+    {
+        <div class="no-data">
+            <i class="fa-solid fa-newspaper"></i>
+            <p>Haber bulunamadı. Farklı bir arama yapmayı deneyin.</p>
+        </div>
+    }
+    else
+    {
+        @foreach (var article in Model.articles)
+        {
+            <div class="news-card">
+                <div class="card-img">
+                    @if (!string.IsNullOrEmpty(article.image))
+                    {
+                        <img src="@article.image" alt="@article.title" loading="lazy" />
+                    }
+                    else
+                    {
+                        <div class="card-img-placeholder">
+                            <i class="fa-solid fa-newspaper"></i>
+                        </div>
+                    }
+                </div>
+                <div class="card-body">
+                    <div class="card-source">
+                        <span class="source-badge">@article.source?.name</span>
+                        <span class="date-text">
+                            @article.publishedAt.ToString("dd MMM yyyy", new System.Globalization.CultureInfo("tr-TR"))
+                        </span>
+                    </div>
+                    <h2 class="card-title">@article.title</h2>
+                    <p class="card-desc">@article.description</p>
+                    <a href="@article.url" target="_blank" class="card-link">
+                        Habere git <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+

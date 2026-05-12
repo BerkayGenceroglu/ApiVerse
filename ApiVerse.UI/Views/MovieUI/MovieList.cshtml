@@ -1,0 +1,280 @@
+﻿@model ResultMovieDto.Item[]
+
+@{
+    ViewData["Title"] = "ApiVerse | Akıllı Keşif";
+    Layout = "~/Views/ApiVerseLayout/Layout.cshtml";
+    var aiChoice = ViewBag.AiData as MovieAiContainerDto;
+
+    string[] cinemaPalette = {
+        "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)",
+        "linear-gradient(135deg, #2d3436 0%, #000000 100%)",
+        "linear-gradient(135deg, #141e30 0%, #243b55 100%)",
+        "linear-gradient(135deg, #000428 0%, #004e92 100%)"
+    };
+}
+
+<style>
+    :root {
+        --gold-primary: #D4AF37;
+        --gold-soft: #fcf6ba;
+        --dark-bg: #0f172a;
+    }
+
+    /* Sayfayı en yukarı taşıyan ve genişleten ayar */
+    .container.main-content {
+        padding-top: 20px !important;
+        max-width: 95% !important; /* Verileri sağa sola yayar */
+    }
+
+    /* --- Üst Başlık --- */
+    .page-header {
+        text-align: center;
+        padding: 0 0 30px 0; /* Üst boşluk sıfırlandı */
+    }
+
+    .main-title {
+        font-size: 3.5rem;
+        font-weight: 900;
+        background: linear-gradient(to bottom, #1e293b, #0f172a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -3px;
+        margin: 0;
+    }
+
+    /* --- Minimalist Arama Kutusu --- */
+    .search-section {
+        max-width: 800px;
+        margin: 0 auto 50px auto;
+    }
+
+    .modern-input-group {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background: #fff;
+        border-radius: 25px;
+        padding: 8px 10px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+        .modern-input-group:focus-within {
+            transform: scale(1.03);
+            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.15);
+        }
+
+        .modern-input-group input {
+            border: none;
+            background: transparent;
+            padding: 12px 25px;
+            width: 100%;
+            font-size: 1.1rem;
+            outline: none;
+            color: var(--dark-bg);
+        }
+
+    .btn-search-gold {
+        background: var(--dark-bg);
+        color: var(--gold-primary);
+        border: none;
+        width: 55px;
+        height: 55px;
+        border-radius: 20px;
+        transition: 0.3s;
+    }
+
+        .btn-search-gold:hover {
+            background: #000;
+            color: #fff;
+        }
+
+    /* --- AI Spotlight (Günün Seçimi) --- */
+    .ai-hero-container {
+        position: relative;
+        border-radius: 45px;
+        padding: 3.5rem;
+        margin-bottom: 4rem;
+        background: linear-gradient(110deg, rgba(15, 23, 42, 0.95) 40%, rgba(15, 23, 42, 0.7) 100%), url('@aiChoice?.PosterUrl');
+        background-size: cover;
+        background-position: center 20%;
+        color: #fff;
+        border: 1px solid rgba(212, 175, 55, 0.3);
+        box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+    }
+
+    .gold-badge {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(212, 175, 55, 0.1);
+        border: 1px solid var(--gold-primary);
+        color: var(--gold-primary);
+        padding: 6px 16px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 25px;
+    }
+
+    .hero-movie-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        line-height: 1;
+        letter-spacing: -2px;
+        background: linear-gradient(to right, #fff, var(--gold-soft));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .ai-critique {
+        font-size: 1.2rem;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.8);
+        max-width: 750px;
+        margin-bottom: 35px;
+        font-weight: 300;
+        border-left: 3px solid var(--gold-primary);
+        padding-left: 25px;
+    }
+
+    .btn-play-premium {
+        background: var(--gold-primary);
+        color: #000;
+        padding: 16px 40px;
+        border-radius: 18px;
+        font-weight: 800;
+        text-decoration: none;
+        transition: 0.3s;
+        box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+    }
+
+    /* --- Film Kartları --- */
+    .movie-card-modern {
+        background: #fff;
+        border-radius: 30px;
+        padding: 1.5rem;
+        height: 100%;
+        transition: 0.4s;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+        .movie-card-modern:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+
+    .poster-placeholder {
+        height: 200px;
+        border-radius: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        color: rgba(255,255,255,0.2);
+        font-size: 3rem;
+    }
+
+    .card-star {
+        color: var(--gold-primary);
+        font-weight: 800;
+    }
+
+    .section-label {
+        font-weight: 800;
+        color: var(--dark-bg);
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+        .section-label::after {
+            content: "";
+            height: 2px;
+            background: #e2e8f0;
+            flex-grow: 1;
+        }
+</style>
+
+<div class="container main-content py-5">
+    <header class="page-header">
+        <h1 class="main-title">ApiVerse AI</h1>
+        <p class="text-muted fw-bold">Sinemanın Geleceğini Keşfet</p>
+    </header>
+
+    <section class="search-section">
+        <form asp-action="SearchMovie" method="post">
+            <div class="modern-input-group">
+                <input type="text" name="title" placeholder="Film adı yazın..." required autocomplete="off">
+                <button type="submit" class="btn-search-gold">
+                    <i class="fa-solid fa-magnifying-glass fs-5"></i>
+                </button>
+            </div>
+        </form>
+    </section>
+
+    @if (aiChoice != null)
+    {
+        <div class="ai-hero-container">
+            <div class="gold-badge">
+                <i class="fa-solid fa-sparkles me-2"></i> Akıllı Öneri
+            </div>
+            <h2 class="hero-movie-title">@aiChoice.ChosenMovieTitle</h2>
+            <div class="ai-critique">
+                "@aiChoice.AiRecommendation"
+            </div>
+            <div class="d-flex align-items-center gap-4">
+                <a href="https://www.youtube.com/watch?v=@aiChoice.TrailerId" target="_blank" class="btn-play-premium">
+                    <i class="fa-solid fa-play me-2"></i> Fragmanı İzle
+                </a>
+            </div>
+        </div>
+
+        <div class="section-label">Diğer Sonuçlar</div>
+    }
+
+    <div class="row g-4">
+        @if (Model != null && Model.Length > 0)
+        {
+            @foreach (var item in Model)
+            {
+                var colorIndex = Math.Abs(item.title.GetHashCode()) % cinemaPalette.Length;
+                var selectedGradient = cinemaPalette[colorIndex];
+
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                    <!-- Kartları yan yana daha fazla yaymak için XL-3 yaptık -->
+                    <div class="movie-card-modern">
+                        <div class="poster-placeholder" style="background: @selectedGradient">
+                            <i class="fa-solid fa-clapperboard"></i>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="fw-bold m-0" style="color:var(--dark-bg); line-height:1.2;">@item.title</h5>
+                            <span class="card-star">
+                                <i class="fa-solid fa-star me-1"></i>@item.vote_average.ToString("0.0")
+                            </span>
+                        </div>
+
+                        <div class="text-muted small mb-3">
+                            <i class="fa-regular fa-calendar me-1"></i> @item.release_date
+                        </div>
+
+                        <p class="small text-muted mb-4" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                            @item.overview
+                        </p>
+
+                        <a href="#" class="btn w-100 fw-bold py-2" style="border-radius:12px; background:#f8fafc; color:var(--dark-bg);">
+                            Detaylı İncele
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

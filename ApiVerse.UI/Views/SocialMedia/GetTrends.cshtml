@@ -1,0 +1,318 @@
+﻿@using System.Linq
+@model SocialMediaTrendsViewModel
+@{
+    ViewData["Title"] = "Trend İçerikler";
+    Layout = "~/Views/ApiVerseLayout/Layout.cshtml";
+}
+
+<style>
+    :root {
+        --yt-red: #FF0000;
+        --sp-green: #1DB954;
+        --rd-orange: #FF4500;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+    }
+
+    .trends-container {
+        padding: 24px;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        background-color: #f8fafc;
+    }
+
+    .section-title {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--text-main);
+        margin-bottom: 2rem;
+        letter-spacing: -0.5px;
+    }
+
+    .trends-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        gap: 24px;
+        align-items: stretch;
+    }
+
+    .trend-card {
+        display: flex;
+        flex-direction: column;
+        background: white;
+        border-radius: 20px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+        .trend-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
+        }
+
+    .card-header {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .header-top {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    /* Kart Üstü Açıklama Yazısı */
+    .card-subtitle {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        opacity: 0.8;
+    }
+
+    .platform-badge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 13px;
+    }
+
+    .trend-list {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .trend-item {
+        display: flex;
+        align-items: center;
+        padding: 18px 20px;
+        gap: 20px;
+        border-bottom: 1px solid #f1f5f9;
+        transition: background 0.2s;
+        text-decoration: none;
+        color: inherit;
+    }
+
+        .trend-item:last-child {
+            border-bottom: none;
+        }
+
+        .trend-item:hover {
+            background: #f8fafc;
+        }
+
+    .rank-number {
+        font-size: 18px;
+        font-weight: 800;
+        color: #cbd5e1;
+        width: 28px;
+        flex-shrink: 0;
+    }
+
+    .media-box {
+        width: 64px;
+        height: 64px;
+        border-radius: 12px;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: #f1f5f9;
+    }
+
+        .media-box.yt-large {
+            width: 120px;
+            height: 68px;
+        }
+
+    .rd-large-box {
+        width: 80px;
+        height: 80px;
+        border-radius: 14px;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: #f1f5f9;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+        .media-box img, .rd-large-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .item-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .item-title {
+        font-weight: 600;
+        font-size: 15px;
+        color: var(--text-main);
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 4px;
+    }
+
+    .item-meta {
+        font-size: 13px;
+        color: var(--text-muted);
+    }
+
+    .empty-state {
+        padding: 40px;
+        text-align: center;
+        color: #94a3b8;
+        font-size: 14px;
+    }
+</style>
+
+<div class="trends-container">
+    <h1 class="section-title">Trend İçerikler</h1>
+
+    <div class="trends-grid">
+
+        <!-- YOUTUBE -->
+        <div class="trend-card" style="border-top: 4px solid var(--yt-red);">
+            <div class="card-header">
+                <div class="header-top">
+                    <div class="platform-badge" style="background: #fee2e2; color: var(--yt-red);">
+                        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.75 15.5v-7l6.25 3.5-6.25 3.5z" /></svg>
+                        YouTube
+                    </div>
+                </div>
+                <span class="card-subtitle" style="color: var(--yt-red);">Türkiye Gündemindeki En Popüler 5 Video</span>
+            </div>
+            <div class="trend-list">
+                @if (Model.Youtube?.items != null && Model.Youtube.items.Any())
+                {
+                    int rank = 1;
+                    foreach (var item in Model.Youtube.items.Take(5))
+                    {
+                        var ytImg = item.snippet.thumbnails?.high?.url ?? $"https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=400";
+                        <div class="trend-item">
+                            <span class="rank-number">@rank</span>
+                            <div class="media-box yt-large"><img src="@ytImg" alt="yt" /></div>
+                            <div class="item-content">
+                                <div class="item-title">@item.snippet.title</div>
+                                <div class="item-meta">@item.snippet.channelTitle</div>
+                            </div>
+                        </div>
+                        rank++;
+                    }
+                }
+                else
+                {
+
+                    <div class="empty-state">Veri bulunamadı.</div>
+                }
+            </div>
+        </div>
+
+        <!-- SPOTIFY -->
+        <div class="trend-card" style="border-top: 4px solid var(--sp-green);">
+            <div class="card-header">
+                <div class="header-top">
+                    <div class="platform-badge" style="background: #dcfce7; color: #15803d;">
+                        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.49 17.306c-.215.353-.674.464-1.027.249-2.846-1.74-6.429-2.13-10.647-1.168-.403.093-.81-.157-.903-.56-.093-.404.157-.811.56-.904 4.608-1.055 8.568-.611 11.76 1.341.353.215.464.674.249 1.042zm1.464-3.259c-.27.44-.846.578-1.287.308-3.258-2.003-8.226-2.585-12.08-1.415-.494.15-1.018-.127-1.168-.621-.15-.494.127-1.018.621-1.168 4.41-1.339 9.894-.683 13.621 1.61.44.27.578.847.308 1.287zm.126-3.414C15.222 8.205 8.825 7.993 5.105 9.123c-.58.176-1.19-.158-1.366-.738-.176-.58.158-1.19.738-1.366 4.263-1.294 11.338-1.047 15.792 1.597.522.31.691.983.382 1.505-.31.523-.983.692-1.505.382z" /></svg>
+                        Spotify
+                    </div>
+                </div>
+                <span class="card-subtitle" style="color: #15803d;">Türkiye Top 50 – İlk 5</span>
+            </div>
+            <div class="trend-list">
+                @if (Model.Spotify != null && Model.Spotify.Any())
+                {
+                    int rank = 1;
+                    foreach (var track in Model.Spotify.Take(6))
+                    {
+                        var spImg = !string.IsNullOrEmpty(track.ImageUrl) ? track.ImageUrl : $"https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300";
+                        <div class="trend-item">
+                            <span class="rank-number">@rank</span>
+                            <div class="media-box"><img src="@spImg" alt="sp" /></div>
+                            <div class="item-content">
+                                <div class="item-title">@track.SongName</div>
+                                <div class="item-meta">@track.ArtistName</div>
+                            </div>
+                        </div>
+                        rank++;
+                    }
+                }
+                else
+                {
+
+                    <div class="empty-state">Veri bulunamadı.</div>
+                }
+            </div>
+        </div>
+
+        <!-- REDDIT -->
+        <div class="trend-card" style="border-top: 4px solid var(--rd-orange);">
+            <div class="card-header">
+                <div class="header-top">
+                    <div class="platform-badge" style="background: #fff0e8; color: var(--rd-orange);">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+                        </svg>
+                        Reddit
+                    </div>
+                </div>
+                <span class="card-subtitle" style="color: var(--rd-orange);">Dünyada Programlama Alanında En Çok Etkileşim Alan 5 Gönderi</span>
+            </div>
+            <div class="trend-list">
+                @if (Model.Reddit != null)
+                {
+                    var redditPosts = Model.Reddit as IEnumerable<ApiVerse.Api.Models.SocialMediaModels.RedditPostModel.PostData>;
+                    int rank = 0;
+                    string[] progImgs = {
+                                "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400",
+                                "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400",
+                                "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400",
+                                "https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=400",
+                                "https://images.unsplash.com/photo-1605379399642-870262d3d051?w=400"
+                                };
+
+                    if (redditPosts != null && redditPosts.Any())
+                    {
+                        foreach (var post in redditPosts.Take(5))
+                        {
+                            var rdImg = !string.IsNullOrEmpty(post.thumbnail) && post.thumbnail.StartsWith("http") ? post.thumbnail : progImgs[rank % 5];
+                            <a href="https://reddit.com@post.permalink" target="_blank" class="trend-item">
+                                <span class="rank-number">@(rank + 1)</span>
+                                <div class="rd-large-box"><img src="@rdImg" alt="rd" /></div>
+                                <div class="item-content">
+                                    <div class="item-title">@post.title</div>
+                                    <div class="item-meta">
+                                        <span style="color:#ff4500; font-weight:700;">↑ @post.score.ToString("N0")</span> · @post.subreddit_name_prefixed
+                                    </div>
+                                </div>
+                            </a>
+                            rank++;
+                        }
+                    }
+                    else
+                    {
+
+                        <div class="empty-state">Trend bulunamadı.</div>
+                    }
+                }
+            </div>
+        </div>
+
+    </div>
+</div>

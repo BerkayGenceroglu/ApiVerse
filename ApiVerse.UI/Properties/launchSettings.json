@@ -1,0 +1,30 @@
+﻿{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:3668",
+      "sslPort": 44397
+    }
+  },
+  "profiles": {
+    "ApiVerse.UI": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "MovieUI/MovieList", // Tarayıcı açıldığında gideceği yol burası olmalı
+      "applicationUrl": "https://localhost:7035;http://localhost:5035", // Sadece Port bilgisi kalmalı
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "MovieUI/MovieList",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

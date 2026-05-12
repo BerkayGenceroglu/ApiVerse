@@ -1,0 +1,212 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApiVerse | Ultra Modern Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Resimdeki ana renkler */
+            --primary-dark: #222e3e; /* Koyu Panel Rengi */
+            --accent-blue: #2c3a4d; /* Hover/Aktif Rengi */
+            --body-bg: #f8fafc; /* Arka Plan Kirli Beyaz */
+            --text-main: #222e3e; /* Ana Metin */
+            --text-muted: #64748b; /* Yardımcı Metin */
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--body-bg);
+            /* Arka planda resimdeki gibi çok hafif bir geçiş */
+            background-image: radial-gradient(at 50% 0%, #f1f4f9 0px, transparent 50%);
+            min-height: 100vh;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        /* Sidebar: Resimdeki form kartı stili */
+        #sidebar {
+            width: 280px;
+            height: calc(100vh - 40px);
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--white);
+            border-radius: 32px; /* Daha oval köşeler */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+            padding: 2.5rem 1.5rem;
+            z-index: 1000;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .brand {
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: var(--primary-dark);
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            padding: 14px 20px;
+            border-radius: 16px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+            /* Hover durumu resimdeki buton rengine yakın */
+            .nav-link:hover {
+                background: #f1f5f9;
+                color: var(--primary-dark);
+                transform: translateX(4px);
+            }
+
+            /* Aktif link resimdeki koyu buton stili */
+            .nav-link.active {
+                background: var(--primary-dark);
+                color: var(--white) !important;
+                box-shadow: 0 10px 20px rgba(34, 46, 62, 0.15);
+            }
+
+            .nav-link i {
+                font-size: 1.2rem;
+                width: 24px;
+            }
+
+        #main {
+            margin-left: 320px;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        /* Resimdeki sağ taraftaki büyük koyu kart stili */
+        .glass-card {
+            background: var(--primary-dark);
+            color: var(--white);
+            border-radius: 40px;
+            padding: 3rem;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+            border: none;
+            text-align: center;
+        }
+
+            .glass-card h2 {
+                font-weight: 700;
+                margin-top: 1.5rem;
+            }
+
+            .glass-card p {
+                color: rgba(255,255,255,0.7);
+            }
+
+        hr {
+            border-color: rgba(0,0,0,0.05);
+            margin: 2rem 0;
+        }
+
+        @@media (max-width: 992px) {
+            #sidebar
+
+        {
+            display: none;
+        }
+
+        #main {
+            margin-left: 0;
+            padding: 20px;
+        }
+
+        }
+    </style>
+</head>
+<body>
+
+    <aside id="sidebar">
+        <div class="brand">
+            <span>ApiVerse</span>
+        </div>
+
+        <nav>
+            <a href="/Profile/ProfilePage" class="nav-link active">
+                <i class="fa-solid fa-circle-user"></i> Profil
+            </a>
+
+            <a href="/Earthquake/LiveEarthquakePage" class="nav-link">
+                <i class="fa-solid fa-house-crack"></i> Anlık Deprem ve AI Analizi
+            </a>
+
+            <a href="/Crypto/CryptoStatisticPage" class="nav-link">
+                <i class="fa-solid fa-coins"></i> Canlı Kripto Bilgi ve Öneri Sistemi
+            </a>
+
+            <a href="/Location/DistanceCalculation" class="nav-link">
+                <i class="fa-solid fa-map-location-dot"></i> Konum Bilgi ve Öneri Sistemi
+            </a>
+
+            <a href="/Exchange/ExchangePage" class="nav-link">
+                <i class="fa-solid fa-dollar-sign"></i> Güncel Döviz Bilgi ve Öneri Sistemi
+            </a>
+
+            <a href="/Weather/WeatherPage" class="nav-link">
+                <i class="fa-solid fa-cloud-sun"></i> Hava Durumu Bilgi ve Öneri Sistemi
+            </a>
+
+            <a href="/SocialMedia/GetTrends" class="nav-link">
+                <i class="fa-solid fa-chart-bar"></i>Sosyal Medya Trendleri
+            </a>
+
+            <a href="/Football/Fixtures" class="nav-link">
+                <i class="fa-solid fa-futbol"></i> Süper Lig Fikstür ve Tahmin Sistemi
+            </a>
+
+            <a href="/Fuel/FuelPage" class="nav-link">
+                <i class="fa-solid fa-gas-pump"></i> Güncel Yakıt ve Tahmin Sistemi
+            </a>
+
+            <a href="/MovieUI/MovieList" class="nav-link">
+                <i class="fa-solid fa-clapperboard"></i> Film  Öneri Sistemi
+            </a>
+
+
+            <a href="/Book/BookPage" class="nav-link">
+                <i class="fa-solid fa-book"></i> Kitap Arama ve Öneri Sistemi
+            </a>
+
+            <a href="/News/NewsPage" class="nav-link">
+                <i class="fa-solid fa-newspaper"></i> Güncel Haber ve Bilgi Sistemi
+            </a>
+
+            <a href="/Account/Logout" class="nav-link">
+                <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
+            </a>
+            <hr>
+         
+        </nav>
+    </aside>
+
+    <main id="main">
+
+        @RenderBody()
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

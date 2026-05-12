@@ -1,0 +1,775 @@
+﻿@model ApiVerse.Api.Models.EarthquakeModels.ResultEarthquakeModel
+
+@{
+    ViewData["Title"] = "EarthquakeByCityPage";
+    Layout = "~/Views/ApiVerseLayout/Layout.cshtml";
+
+    var ai = ViewBag.AiAnalysis as EqAiAnalysis;
+
+    // Risk renk / ikon haritası
+    string riskCls = "risk-low";
+    string riskIcon = "fa-circle-check";
+    string riskLabel = "Düşük Risk";
+    if (ai != null)
+    {
+        var lvl = ai.RiskLevel?.ToLower() ?? "";
+        if (lvl == "yüksek") { riskCls = "risk-high"; riskIcon = "fa-circle-exclamation"; riskLabel = "Yüksek Risk"; }
+        else if (lvl == "orta") { riskCls = "risk-medium"; riskIcon = "fa-triangle-exclamation"; riskLabel = "Orta Risk"; }
+    }
+
+    string[] tipIcons = { "fa-shield-halved", "fa-house-crack", "fa-kit-medical" };
+}
+
+<style>
+    .eq-page {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* ── Hero ── */
+    .search-hero {
+        background: #222e3e;
+        border-radius: 28px;
+        padding: 2.5rem 2.5rem 2rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .search-hero::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 260px;
+            height: 260px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .search-hero h2 {
+            color: #fff;
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin-bottom: .3rem;
+            letter-spacing: -.4px;
+        }
+
+        .search-hero p {
+            color: rgba(255,255,255,.5);
+            font-size: .9rem;
+            margin-bottom: 1.6rem;
+        }
+
+    .search-bar {
+        display: flex;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0,0,0,.25);
+        max-width: 580px;
+    }
+
+        .search-bar .icon-slot {
+            background: #fff;
+            display: flex;
+            align-items: center;
+            padding: 0 14px;
+            color: #94a3b8;
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            padding: 14px;
+            font-family: 'Plus Jakarta Sans',sans-serif;
+            font-size: .9rem;
+            outline: none;
+            color: #222e3e;
+            background: #fff;
+        }
+
+            .search-bar input::placeholder {
+                color: #94a3b8;
+            }
+
+        .search-bar button {
+            background: #3b82f6;
+            border: none;
+            color: #fff;
+            padding: 0 24px;
+            font-family: 'Plus Jakarta Sans',sans-serif;
+            font-weight: 700;
+            font-size: .88rem;
+            cursor: pointer;
+            transition: background .2s;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            white-space: nowrap;
+        }
+
+            .search-bar button:hover {
+                background: #2563eb;
+            }
+
+    /* ── İki sütun ── */
+    .content-layout {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr; /* Sol taraf 1.4 kat daha geniş, sağ taraf 1 kat */
+        gap: 1.5rem;
+        align-items: start;
+    }
+
+    @@media (max-width: 1100px) {
+        .content-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* ── Sonuç başlığı ── */
+    .results-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-bottom: 1.25rem;
+        padding: 0 2px;
+    }
+
+        .results-header h4 {
+            font-weight: 800;
+            font-size: 1.15rem;
+            color: #222e3e;
+            margin: 0 0 2px;
+            letter-spacing: -.3px;
+        }
+
+            .results-header h4 span {
+                color: #3b82f6;
+            }
+
+        .results-header small {
+            color: #94a3b8;
+            font-size: .78rem;
+        }
+
+    .count-badge {
+        background: #222e3e;
+        color: #fff;
+        border-radius: 999px;
+        padding: 5px 16px;
+        font-size: .78rem;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    /* ── Kart grid ── */
+    .eq-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+        gap: 1.1rem;
+    }
+
+    /* ── Deprem kartı ── */
+    .eq-card {
+        background: #fff;
+        border-radius: 18px;
+        border: 1.5px solid #f1f5f9;
+        overflow: hidden;
+        transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+        .eq-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 36px rgba(34,46,62,.09);
+        }
+
+    .eq-card-accent {
+        height: 4px;
+        width: 100%;
+    }
+
+    .eq-card-body {
+        padding: 1.1rem 1.25rem .9rem;
+    }
+
+    .eq-top-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: .9rem;
+    }
+
+    .mag-pill {
+        display: flex;
+        align-items: baseline;
+        gap: 4px;
+        background: #f8fafc;
+        border-radius: 10px;
+        padding: 7px 12px;
+    }
+
+    .mag-label {
+        font-size: .62rem;
+        font-weight: 800;
+        color: #94a3b8;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+    }
+
+    .mag-value {
+        font-size: 1.45rem;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -.5px;
+    }
+
+    .time-chip {
+        background: #f1f5f9;
+        border-radius: 7px;
+        padding: 4px 10px;
+        font-size: .72rem;
+        font-weight: 600;
+        color: #64748b;
+    }
+
+    .eq-title {
+        font-size: .88rem;
+        font-weight: 700;
+        color: #1e293b;
+        line-height: 1.45;
+        margin-bottom: .75rem;
+    }
+
+    .eq-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .eq-meta-row {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: .78rem;
+        color: #64748b;
+    }
+
+        .eq-meta-row i {
+            color: #3b82f6;
+            font-size: .85rem;
+            width: 15px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .eq-meta-row strong {
+            color: #334155;
+        }
+
+    .eq-footer {
+        padding: .7rem 1.25rem 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .source-tag {
+        background: #eef2ff;
+        color: #4338ca;
+        border-radius: 5px;
+        padding: 2px 8px;
+        font-size: .68rem;
+        font-weight: 700;
+    }
+
+    /* ── Renkler ── */
+    .mag-high {
+        color: #dc2626;
+    }
+
+    .accent-high {
+        background: #dc2626;
+    }
+
+    .mag-medium {
+        color: #ea580c;
+    }
+
+    .accent-medium {
+        background: #ea580c;
+    }
+
+    .mag-low {
+        color: #d97706;
+    }
+
+    .accent-low {
+        background: #d97706;
+    }
+
+    .mag-micro {
+        color: #16a34a;
+    }
+
+    .accent-micro {
+        background: #16a34a;
+    }
+
+    /* ── Boş / Karşılama ── */
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: #fff;
+        border-radius: 22px;
+        border: 1.5px dashed #e2e8f0;
+    }
+
+        .empty-state .icon-wrap {
+            width: 72px;
+            height: 72px;
+            background: #f8fafc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+        }
+
+        .empty-state i {
+            font-size: 2rem;
+            color: #cbd5e1;
+        }
+
+        .empty-state h5 {
+            font-weight: 800;
+            color: #334155;
+            margin-bottom: .4rem;
+        }
+
+        .empty-state p {
+            color: #94a3b8;
+            font-size: .88rem;
+            margin: 0;
+        }
+
+    .welcome-state {
+        text-align: center;
+        padding: 4rem 2rem;
+    }
+
+        .welcome-state .icon-big {
+            font-size: 3.2rem;
+            color: #cbd5e1;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-state h5 {
+            font-weight: 800;
+            color: #334155;
+            margin-bottom: .4rem;
+        }
+
+        .welcome-state p {
+            color: #94a3b8;
+            font-size: .88rem;
+        }
+
+    /* ═══════════════════════════════
+           AI PANELİ
+        ═══════════════════════════════ */
+    .ai-panel {
+        position: sticky;
+        top: 24px;
+        background: #fff;
+        border-radius: 24px;
+        border: 1.5px solid #f1f5f9;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(34,46,62,.07);
+    }
+
+    .ai-panel-header {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        padding: 1.4rem 1.5rem 1.2rem;
+    }
+
+    .ai-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(59,130,246,.22);
+        color: #93c5fd;
+        border-radius: 999px;
+        padding: 3px 12px;
+        font-size: .7rem;
+        font-weight: 700;
+        letter-spacing: .4px;
+        margin-bottom: .75rem;
+    }
+
+    .ai-panel-header h5 {
+        color: #fff;
+        font-weight: 800;
+        font-size: 1rem;
+        margin: 0 0 .2rem;
+    }
+
+    .ai-panel-header p {
+        color: rgba(255,255,255,.4);
+        font-size: .76rem;
+        margin: 0;
+    }
+
+    .ai-panel-body {
+        padding: 1.25rem 1.4rem;
+    }
+
+    .ai-section {
+        margin-bottom: 1.2rem;
+    }
+
+        .ai-section:last-child {
+            margin-bottom: 0;
+        }
+
+    .ai-section-title {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: .7rem;
+        font-weight: 800;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        color: #94a3b8;
+        margin-bottom: .6rem;
+    }
+
+    /* Risk */
+    .risk-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 8px;
+        padding: 6px 14px;
+        font-size: .8rem;
+        font-weight: 700;
+        margin-bottom: .85rem;
+    }
+
+    .risk-low {
+        background: #dcfce7;
+        color: #15803d;
+    }
+
+    .risk-medium {
+        background: #fef9c3;
+        color: #854d0e;
+    }
+
+    .risk-high {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    .ai-status-box {
+        background: #f8fafc;
+        border-radius: 14px;
+        padding: 1rem 1.1rem;
+        font-size: .83rem;
+        color: #334155;
+        line-height: 1.65;
+        border-left: 3px solid #3b82f6;
+    }
+
+    /* Öneriler */
+    .ai-tips {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .ai-tip {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        background: #f8fafc;
+        border-radius: 11px;
+        padding: .7rem .9rem;
+        font-size: .81rem;
+        color: #334155;
+        line-height: 1.5;
+    }
+
+    .tip-icon {
+        width: 28px;
+        height: 28px;
+        background: #dbeafe;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: #2563eb;
+        font-size: .82rem;
+    }
+
+    /* Acil notlar */
+    .ai-notes {
+        background: #fff7ed;
+        border-radius: 14px;
+        padding: 1rem 1.1rem;
+        border: 1.5px solid #fed7aa;
+    }
+
+    .ai-note-item {
+        display: flex;
+        gap: 9px;
+        align-items: flex-start;
+        font-size: .8rem;
+        color: #7c3d12;
+        line-height: 1.5;
+        margin-bottom: .6rem;
+    }
+
+        .ai-note-item:last-child {
+            margin-bottom: 0;
+        }
+
+    .note-num {
+        background: #ea580c;
+        color: #fff;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: .66rem;
+        font-weight: 800;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+
+    /* Boş panel */
+    .ai-empty {
+        padding: 2.5rem 1.5rem;
+        text-align: center;
+        color: #94a3b8;
+        font-size: .84rem;
+    }
+
+        .ai-empty i {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: .75rem;
+            color: #e2e8f0;
+        }
+</style>
+
+<div class="eq-page">
+
+    <!-- ── Hero Arama ── -->
+    <div class="search-hero">
+        <h2><i class="fa-solid fa-earth-europe me-2" style="opacity:.65;"></i>Şehir Bazlı Deprem Sorgulama</h2>
+        <p>Merak ettiğiniz şehri yazarak son depremleri ve yapay zeka analizini anında görün.</p>
+        <form method="post">
+            <div class="search-bar">
+                <div class="icon-slot"><i class="fa-solid fa-city"></i></div>
+                <input type="text" name="city"
+                       placeholder="Örn: İstanbul, Adana, Malatya…"
+                       value="@ViewBag.SearchCity" required>
+                <button type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>Sorgula
+                </button>
+            </div>
+        </form>
+    </div>
+
+    @if (Model != null)
+    {
+        <div class="content-layout">
+
+            <!-- ── SOL: Deprem Listesi ── -->
+            <div>
+                <div class="results-header">
+                    <div>
+                        <h4><span>@ViewBag.SearchCity</span> ve En Yakın Çevresi İçin Sonuçlar</h4>
+                        <small>
+                            <i class="fa-regular fa-clock me-1"></i>
+                            Son güncelleme:
+                            @(DateTime.TryParse(Model.cache?.updated_at, out var dt)
+                                                    ? dt.ToString("dd.MM.yyyy HH:mm") : "Belirtilmedi")
+                    </small>
+                </div>
+                <span class="count-badge">@Model.total_returned Kayıt</span>
+            </div>
+
+            @if (Model.events != null && Model.events.Any())
+                {
+                    <div class="eq-grid">
+                        @foreach (var eq in Model.events)
+                        {
+                            var mag = eq.preferred_data.magnitude;
+                            string magClass = mag >= 4 ? "mag-high" : mag >= 3 ? "mag-medium" : mag >= 2 ? "mag-low" : "mag-micro";
+                            string accentClass = mag >= 4 ? "accent-high" : mag >= 3 ? "accent-medium" : mag >= 2 ? "accent-low" : "accent-micro";
+
+                            <div class="eq-card">
+                                <div class="eq-card-accent @accentClass"></div>
+                                <div class="eq-card-body">
+                                    <div class="eq-top-row">
+                                        <div class="mag-pill">
+                                            <span class="mag-label">MAG</span>
+                                            <span class="mag-value @magClass">@mag.ToString("0.0")</span>
+                                        </div>
+                                        <span class="time-chip">
+                                            <i class="fa-regular fa-clock me-1"></i>@eq.preferred_data.relative_time
+                                        </span>
+                                    </div>
+                                    <div class="eq-title">@eq.preferred_data.location.description</div>
+                                    <div class="eq-meta">
+                                        <div class="eq-meta-row">
+                                            <i class="fa-solid fa-location-crosshairs"></i>
+                                            <span>@eq.preferred_data.location.city / @eq.preferred_data.location.district</span>
+                                        </div>
+                                        <div class="eq-meta-row">
+                                            <i class="fa-solid fa-arrows-down-to-line"></i>
+                                            <span>Derinlik: <strong>@eq.preferred_data.depth_km km</strong></span>
+                                        </div>
+                                        <div class="eq-meta-row">
+                                            <i class="fa-solid fa-calendar-day"></i>
+                                            <span>
+                                                @(DateTime.TryParse(eq.preferred_data.timestamp_local, out var eventDt)
+                                                                                    ? eventDt.ToString("dd.MM.yyyy HH:mm")
+                                                                                    : eq.preferred_data.timestamp_local)
+                                </span>
+                            </div>
+                            <div class="eq-meta-row">
+                                <i class="fa-solid fa-database"></i>
+                                <span>@eq.preferred_data.source_count Kaynak</span>
+                            </div>
+                        </div>
+                    </div>
+                    @if (eq.preferred_data.confirmed_by != null && eq.preferred_data.confirmed_by.Any())
+                                {
+                                    <div class="eq-footer">
+                                        @foreach (var source in eq.preferred_data.confirmed_by)
+                                        {
+                                            <span class="source-tag">@source</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <div class="icon-wrap"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <h5>Sonuç Bulunamadı</h5>
+                        <p>Aradığınız şehirde yakın zamanda bir sarsıntı kaydedilmedi.</p>
+                    </div>
+                }
+            </div>
+
+            <!-- ── SAĞ: AI Analiz Paneli ── -->
+            <div>
+                <div class="ai-panel">
+                    <div class="ai-panel-header">
+                        <div class="ai-badge">
+                            <i class="fa-solid fa-microchip"></i> 
+                        </div>
+                        <h5><i class="fa-solid fa-brain me-2" style="opacity:.7;"></i>Yapay Zeka Değerlendirmesi</h5>
+                        <p>@ViewBag.SearchCity bölgesi · @Model.total_returned deprem analiz edildi</p>
+                    </div>
+
+                    <div class="ai-panel-body">
+
+                        @if (ai != null)
+                        {
+                            <!-- Risk Durumu -->
+                            <div class="ai-section">
+                                <div class="ai-section-title">
+                                    <i class="fa-solid fa-signal" style="color:#3b82f6;"></i> Risk Durumu
+                                </div>
+                                <div class="risk-badge @riskCls">
+                                    <i class="fa-solid @riskIcon"></i> @riskLabel
+                                </div>
+                                <div class="ai-status-box">@ai.DurumAnalizi</div>
+                            </div>
+
+                            <!-- Öneriler -->
+                            <div class="ai-section">
+                                <div class="ai-section-title">
+                                    <i class="fa-solid fa-lightbulb" style="color:#d97706;"></i> Öneriler
+                                </div>
+                                <div class="ai-tips">
+                                    @for (int i = 0; i < ai.Oneriler.Count; i++)
+                                    {
+                                        <div class="ai-tip">
+                                            <div class="tip-icon">
+                                                <i class="fa-solid @(i<tipIcons.Length? tipIcons[i] : "fa-circle-info")"></i>
+                                            </div>
+                                            <span>@ai.Oneriler[i]</span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            <!-- Acil Notlar -->
+                            <div class="ai-section">
+                                <div class="ai-section-title">
+                                    <i class="fa-solid fa-triangle-exclamation" style="color:#ea580c;"></i> Deprem Anında Yapılacaklar
+                                </div>
+                                <div class="ai-notes">
+                                    @for (int i = 0; i < ai.AcilNotlar.Count; i++)
+                                    {
+                                        <div class="ai-note-item">
+                                            <div class="note-num">@(i + 1)</div>
+                                            <span>@ai.AcilNotlar[i]</span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="ai-empty">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                Analiz şu an kullanılamıyor.
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    
+        <!-- /content-layout -->
+    }
+    else
+    {
+        <!-- ── Karşılama ekranı ── -->
+        <div class="content-layout">
+            <div class="welcome-state">
+                <i class="fa-solid fa-earth-europe icon-big"></i>
+                <h5>Hızlı Şehir Sorgulama</h5>
+                <p>Listelemek için yukarıdaki arama kutusuna bir şehir ismi girin.</p>
+            </div>
+            <div class="ai-panel">
+                <div class="ai-panel-header">
+                    <h5>Yapay Zeka Değerlendirmesi</h5>
+                    <p>Şehir sorguladıktan sonra analiz başlar</p>
+                </div>
+                <div class="ai-panel-body">
+                    <div class="ai-empty">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        Bir şehir aratın, yapay zeka deprem verilerini otomatik değerlendirsin.
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

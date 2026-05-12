@@ -1,0 +1,152 @@
+﻿@using ApiVerse.Api.Models.BookModels
+@using System.Linq
+@model BookSearchViewModel
+
+@{
+    ViewData["Title"] = "BookPage";
+    Layout = "~/Views/ApiVerseLayout/Layout.cshtml";
+}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 style="font-weight:800; color:#222e3e;">Kitap Öneri Sistemi</h2>
+        <p style="color:#64748b;">Yazar veya kitap adına göre arama yapın.</p>
+    </div>
+</div>
+
+<form method="post" asp-controller="Book" asp-action="BookSearch">
+    <div class="row g-3 mb-5">
+        <div class="col-md-10">
+            <input type="text"
+                   asp-for="Query"
+                   placeholder="Kitap adı veya yazar arayın..."
+                   class="form-control"
+                   style="border-radius:16px; padding:14px 20px; border:1px solid #e2e8f0; font-weight:600; font-size:0.95rem;" />
+        </div>
+
+        <div class="col-md-2">
+            <button type="submit" class="btn w-100" style="background:#222e3e; color:white; border-radius:16px; padding:14px 20px; font-weight:700;">
+                <i class="fa-solid fa-magnifying-glass me-2"></i> Ara
+            </button>
+        </div>
+    </div>
+</form>
+
+@* --- AI ÖNERİSİ BÖLÜMÜ --- *@
+@if (ViewBag.AiAnalysis != null)
+{
+    <div class="row mb-5">
+        <div class="col-12">
+            <div style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 24px; padding: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">
+                <div class="d-flex align-items-center mb-3">
+                    <div style="background: #222e3e; color: white; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                    </div>
+                    <h4 style="margin: 0; font-weight: 800; color: #1e293b;">Yapay Zeka Editör Seçimi</h4>
+                </div>
+
+                <div style="color: #475569; line-height: 1.8;">
+                    @{
+                        // Metni satırlara bölüyoruz
+                        var aiText = ViewBag.AiAnalysis.ToString();
+                        var lines = aiText.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+
+                        foreach (var line in lines)
+                        {
+                            // Hata veren Skip(1) yerine Substring/IndexOf mantığına geçtik
+                            if (line.Contains(":"))
+                            {
+                                int colonIndex = line.IndexOf(':');
+                                string label = line.Substring(0, colonIndex);
+                                string content = line.Substring(colonIndex + 1);
+
+                                <p class="mb-2">
+                                    <strong style="color: #0f172a;">@label:</strong>@content
+                                </p>
+                            }
+                            else
+                            {
+                                <p class="mb-2">@line</p>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@* --- KİTAP LİSTESİ --- *@
+@if (ViewBag.Books != null)
+{
+    var books = ViewBag.Books as List<ResultBookModel.BookItem>;
+
+    if (books == null || books.Count == 0)
+    {
+        <div class="text-center py-5" style="color:#64748b;">
+            <i class="fa-solid fa-book-open fa-3x mb-3"></i>
+            <p style="font-weight:600;">Sonuç bulunamadı.</p>
+        </div>
+    }
+    else
+    {
+        <h5 class="mb-4" style="font-weight: 700; color: #334155;">Tüm Sonuçlar (@books.Count)</h5>
+        <div class="row g-4">
+            @foreach (var book in books)
+            {
+                var info = book.VolumeInfo;
+
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div style="background:white; border-radius:24px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.06); height:100%; display:flex; flex-direction:column; transition: transform 0.2s ease;"
+                         onmouseover="this.style.transform='translateY(-4px)'"
+                         onmouseout="this.style.transform='translateY(0)'">
+
+                        <div style="background:#f1f5f9; height:320px; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                            @if (info.ImageLinks != null && !string.IsNullOrEmpty(info.ImageLinks.Thumbnail))
+                            {
+                                <img src="@info.ImageLinks.Thumbnail.Replace("http://", "https://")"
+                                     alt="@info.Title"
+                                     style="height:100%; width:100%; object-fit:contain; padding:10px;"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                            }
+                            <div style="@(info.ImageLinks != null ? "display:none;" : "display:flex;") align-items:center; justify-content:center; width:100%; height:100%; color:#94a3b8; flex-direction:column; gap:8px;">
+                                <i class="fa-solid fa-book fa-3x"></i>
+                                <span style="font-size:0.75rem; font-weight:600;">Görsel Yok</span>
+                            </div>
+                        </div>
+
+                        <div style="padding:1.25rem; flex:1; display:flex; flex-direction:column; gap:8px;">
+                            <h6 style="font-weight:800; color:#222e3e; margin:0; line-height:1.4;">@info.Title</h6>
+
+                            @if (info.Authors != null && info.Authors.Any())
+                            {
+                                <p style="color:#64748b; font-size:0.85rem; font-weight:600; margin:0;">
+                                    <i class="fa-solid fa-user-pen me-1"></i> @string.Join(", ", info.Authors)
+                                </p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(info.PublishedDate))
+                            {
+                                <p style="color:#94a3b8; font-size:0.8rem; font-weight:600; margin:0;">
+                                    <i class="fa-solid fa-calendar me-1"></i> @info.PublishedDate
+                                </p>
+                            }
+
+                            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:auto; padding-top:10px;">
+                                @if (!string.IsNullOrEmpty(info.Publisher))
+                                {
+                                    <span style="background:#f1f5f9; color:#475569; font-size:0.7rem; font-weight:700; padding:4px 10px; border-radius:8px; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                        <i class="fa-solid fa-building me-1"></i> @info.Publisher
+                                    </span>
+                                }
+
+                                <a href="@info.PreviewLink" target="_blank" class="btn btn-sm" style="background:#222e3e; color:white; font-size:0.7rem; border-radius:8px; font-weight:600;">
+                                    İncele <i class="fa-solid fa-arrow-up-right-from-square ms-1" style="font-size:0.6rem;"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}

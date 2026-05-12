@@ -1,0 +1,95 @@
+﻿@model ApiVerse.Api.Models.FuelModels.FuelPriceResponse.FuelPrice
+
+@{
+    ViewData["Title"] = "FuelPage";
+    Layout = "~/Views/ApiVerseLayout/Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="mb-4">
+        <h4 style="font-weight:800; color:#222e3e;">Türkiye Akaryakıt Fiyatları</h4>
+        <p style="color:#64748b;">Anlık EUR/TRY kuru ile hesaplanmış güncel fiyatlar</p>
+    </div>
+
+    @if (Model != null)
+    {
+        <div class="row g-4">
+            <!-- Benzin -->
+            <div class="col-md-4">
+                <div style="background:#ffffff; border-radius:24px; padding:2rem; box-shadow:0 10px 30px rgba(0,0,0,0.06); border:1px solid rgba(0,0,0,0.04); text-align:center;">
+                    <div style="background:#fff7ed; width:64px; height:64px; border-radius:16px; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+                        <i class="fa-solid fa-gas-pump" style="font-size:1.6rem; color:#ea580c;"></i>
+                    </div>
+                    <p style="color:#64748b; font-weight:600; margin-bottom:0.5rem;">Benzin</p>
+                    <h2 style="font-weight:800; color:#222e3e; margin:0;">@Model.Gasoline <span style="font-size:1rem; color:#64748b;">₺/L</span></h2>
+                </div>
+            </div>
+
+            <!-- Motorin -->
+            <div class="col-md-4">
+                <div style="background:#ffffff; border-radius:24px; padding:2rem; box-shadow:0 10px 30px rgba(0,0,0,0.06); border:1px solid rgba(0,0,0,0.04); text-align:center;">
+                    <div style="background:#eff6ff; width:64px; height:64px; border-radius:16px; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+                        <i class="fa-solid fa-oil-can" style="font-size:1.6rem; color:#2563eb;"></i>
+                    </div>
+                    <p style="color:#64748b; font-weight:600; margin-bottom:0.5rem;">Motorin</p>
+                    <h2 style="font-weight:800; color:#222e3e; margin:0;">@Model.Diesel <span style="font-size:1rem; color:#64748b;">₺/L</span></h2>
+                </div>
+            </div>
+
+            <!-- LPG -->
+            <div class="col-md-4">
+                <div style="background:#ffffff; border-radius:24px; padding:2rem; box-shadow:0 10px 30px rgba(0,0,0,0.06); border:1px solid rgba(0,0,0,0.04); text-align:center;">
+                    <div style="background:#f0fdf4; width:64px; height:64px; border-radius:16px; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+                        <i class="fa-solid fa-fire-flame-simple" style="font-size:1.6rem; color:#16a34a;"></i>
+                    </div>
+                    <p style="color:#64748b; font-weight:600; margin-bottom:0.5rem;">LPG</p>
+                    <h2 style="font-weight:800; color:#222e3e; margin:0;">
+                        @(Model.Lpg == "-" ? "Mevcut Değil" : Model.Lpg + " ₺/L")
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bilgi Kartı -->
+        <div class="mt-4">
+            <div style="background:#222e3e; border-radius:24px; padding:2rem; color:white;">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <i class="fa-solid fa-circle-info" style="font-size:2rem; color:rgba(255,255,255,0.5);"></i>
+                    </div>
+                    <div class="col">
+                        <p style="margin:0; font-weight:600;">Fiyatlar TCMB anlık EUR/TRY kuru ile hesaplanmıştır.</p>
+                        <p style="margin:0; color:rgba(255,255,255,0.5); font-size:0.9rem;">Kaynak: gas-price RapidAPI & TCMB</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Analiz Kartı -->
+        @if (ViewBag.AiComment != null)
+        {
+            <div class="mt-4">
+                <div style="background:#ffffff; border-radius:24px; padding:2rem; box-shadow:0 10px 30px rgba(0,0,0,0.06); border:1px solid rgba(0,0,0,0.04);">
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:1.2rem;">
+                        <div style="background:#f5f3ff; width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center;">
+                            <i class="fa-solid fa-robot" style="font-size:1.3rem; color:#7c3aed;"></i>
+                        </div>
+                        <div>
+                            <h5 style="margin:0; font-weight:700; color:#222e3e;">AI Akaryakıt Analizi</h5>
+                            <p style="margin:0; font-size:0.85rem; color:#64748b;">GPT-4o tarafından oluşturuldu</p>
+                        </div>
+                    </div>
+                    <hr style="border-color:rgba(0,0,0,0.06); margin:1rem 0;">
+                    <p style="color:#374151; line-height:1.9; margin:0; font-size:0.95rem;">@ViewBag.AiComment</p>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div style="background:#fff1f2; border-radius:24px; padding:2rem; text-align:center;">
+            <i class="fa-solid fa-triangle-exclamation" style="font-size:2rem; color:#e11d48;"></i>
+            <p style="margin-top:1rem; color:#e11d48; font-weight:600;">Fiyat bilgisi alınamadı. Lütfen tekrar deneyin.</p>
+        </div>
+    }
+</div>

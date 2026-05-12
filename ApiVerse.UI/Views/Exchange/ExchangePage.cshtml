@@ -1,0 +1,277 @@
+﻿@model ExchangeViewModel
+
+@{
+    ViewData["Title"] = "Piyasa Verileri";
+    Layout = "~/Views/ApiVerseLayout/Layout.cshtml";
+}
+
+<style>
+    /* Mevcut Kart Stilleri */
+    .market-card {
+        background: var(--white);
+        border-radius: 24px;
+        padding: 1.5rem;
+        border: 1px solid rgba(0,0,0,0.03);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+        .market-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(34, 46, 62, 0.06);
+        }
+
+    .icon-box {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+
+    .bg-gold-light {
+        background: #fff9e6;
+        color: #ffcc00;
+    }
+
+    .bg-blue-light {
+        background: #eef2ff;
+        color: #4361ee;
+    }
+
+    .bg-orange-light {
+        background: #fff4eb;
+        color: #f7931a;
+    }
+
+    .currency-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px dashed #f1f5f9;
+    }
+
+    .trend-indicator {
+        font-size: 0.8rem;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 8px;
+    }
+
+    .trend-up {
+        background: #ecfdf5;
+        color: #10b981;
+    }
+
+    .trend-down {
+        background: #fff1f2;
+        color: #f43f5e;
+    }
+
+    /* --- YENİ AI INSIGHT PANEL STİLLERİ --- */
+    .ai-insight-card {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        border-radius: 28px;
+        padding: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+        /* Arka plandaki teknolojik ışıltı animasyonu */
+        .ai-insight-card::after {
+            content: "";
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(67, 97, 238, 0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+    .ai-quote {
+        font-family: 'Georgia', serif;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #cbd5e1;
+        font-style: italic;
+        position: relative;
+        z-index: 1;
+    }
+
+    .ai-badge {
+        background: rgba(67, 97, 238, 0.2);
+        color: #7dd3fc;
+        border: 1px solid rgba(125, 211, 252, 0.3);
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .ai-btn-glow {
+        background: #f8fafc;
+        color: #0f172a;
+        border: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+
+        .ai-btn-glow:hover {
+            background: #ffffff;
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+        }
+
+    .fw-800 {
+        font-weight: 800;
+    }
+
+    .fw-600 {
+        font-weight: 600;
+    }
+</style>
+
+<div class="row mb-4 align-items-center">
+    <div class="col-md-6">
+        <h2 class="fw-800" style="letter-spacing: -1px; color: var(--primary-dark);">Canlı Piyasalar</h2>
+        <p class="text-muted">ApiVerse üzerinden anlık döviz, altın ve kripto takibi.</p>
+    </div>
+    <div class="col-md-6 text-md-end">
+        <span class="badge bg-white text-dark border py-2 px-3 rounded-pill shadow-sm">
+            <i class="fa-solid fa-clock text-primary me-2"></i> @DateTime.Now.ToString("HH:mm")
+        </span>
+    </div>
+</div>
+
+<div class="row g-4 d-flex align-items-stretch">
+    <!-- ALTIN PANELİ -->
+    <div class="col-xl-4 col-md-6">
+        <div class="market-card">
+            <div>
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="icon-box bg-gold-light">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                    <span class="trend-indicator @(Model.ResultGoldViewModel.arrow.Contains("up") ? "trend-up" : "trend-down")">
+                        <i class="fa-solid fa-caret-@(Model.ResultGoldViewModel.arrow.Contains("up") ? "up" : "down")"></i> %@Model.ResultGoldViewModel.percent
+                    </span>
+                </div>
+                <h6 class="text-muted fw-600 mb-1">Has Altın / Gram</h6>
+                <h3 class="fw-800 mb-0">@Model.ResultGoldViewModel.buy ₺</h3>
+                <div class="mt-3">
+                    <div class="currency-row">
+                        <span class="small text-muted">Satış Fiyatı</span>
+                        <span class="fw-bold">@Model.ResultGoldViewModel.sell ₺</span>
+                    </div>
+                </div>
+            </div>
+            <div class="last-update pt-3 border-top mt-3" style="font-size: 0.7rem;">
+                <i class="fa-solid fa-rotate"></i> Son Güncelleme: @Model.ResultGoldViewModel.last_update
+            </div>
+        </div>
+    </div>
+
+    <!-- DÖVİZ PANELİ -->
+    <div class="col-xl-4 col-md-6">
+        <div class="market-card">
+            <div>
+                <div class="icon-box bg-blue-light">
+                    <i class="fa-solid fa-landmark-flag"></i>
+                </div>
+                <h6 class="text-muted fw-600 mb-1">Merkez Bankası (Base: @Model.CurrencyRateViewModel.Base)</h6>
+                <div class="mt-2">
+                    <div class="currency-row">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold">USD</span> <small class="text-muted">Dolar</small>
+                        </div>
+                        <span class="fw-800">@Model.CurrencyRateViewModel.USD.ToString("N2") ₺</span>
+                    </div>
+                    <div class="currency-row">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold">EUR</span> <small class="text-muted">Euro</small>
+                        </div>
+                        <span class="fw-800">@Model.CurrencyRateViewModel.EUR.ToString("N2") ₺</span>
+                    </div>
+                </div>
+            </div>
+            <div class="last-update pt-3 border-top mt-3" style="font-size: 0.7rem;">
+                <i class="fa-solid fa-calendar-day"></i> Veri Tarihi: @Model.CurrencyRateViewModel.LastUpdate
+            </div>
+        </div>
+    </div>
+
+    <!-- KRİPTO PANELİ -->
+    <div class="col-xl-4 col-md-12">
+        <div class="market-card">
+            <div>
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="icon-box bg-orange-light">
+                        <i class="fa-brands fa-bitcoin"></i>
+                    </div>
+                    <div class="text-end">
+                        <small class="d-block text-muted">Binance</small>
+                        <span class="fw-bold text-warning" style="font-size:0.8rem">@Model.BitcoinValueViewModel.symbol</span>
+                    </div>
+                </div>
+                <h6 class="text-muted fw-600 mb-1">Bitcoin (BTC) Değeri</h6>
+                @{
+                    decimal btcPrice = 0;
+                    decimal.TryParse(Model.BitcoinValueViewModel.lastPrice.Replace(".", ","), out btcPrice);
+                }
+                <h3 class="fw-800 mb-0 text-dark">@btcPrice.ToString("N0") ₺</h3>
+                <div class="mt-3">
+                    <div class="progress" style="height: 6px; border-radius: 10px; background: #f1f5f9;">
+                        <div class="progress-bar" style="width: 75%; background: #f7931a; border-radius: 10px;"></div>
+                    </div>
+                    <small class="text-muted d-block mt-2">Piyasa Hacmi: Yüksek</small>
+                </div>
+            </div>
+            <div class="last-update pt-3 border-top mt-3" style="font-size: 0.7rem;">
+                <i class="fa-solid fa-circle-check text-success"></i> Binance API Aktif
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- YENİ AI ÖNERİ KARTI (image_20fcc3.png referans alınarak) -->
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="ai-insight-card">
+            <div class="row align-items-center position-relative" style="z-index: 1;">
+                <div class="col-lg-9 col-md-8">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        
+                        <h4 class="mb-0 text-white fw-800">AI Yatırım Asistanı</h4>
+                        <span class="ai-badge">Canlı Analiz</span>
+                    </div>
+
+                    <div class="ai-quote">
+                        @Model.AiAnalysis
+                    </div>
+
+                    <div class="mt-3 d-flex align-items-center gap-2 text-muted small">
+                        <span>Yatırım tavsiyesi değildir. Veriler otomatik analiz edilmiştir.</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 text-md-end mt-4 mt-md-0">
+                    <button class="btn ai-btn-glow rounded-pill px-4 py-2 fw-600">
+                        Detaylı Analiz
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

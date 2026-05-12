@@ -1,0 +1,73 @@
+﻿@model List<MatchPrediction>
+@{
+    ViewData["Title"] = "Yapay Zeka Tahminleri";
+    Layout = "~/Views/ApiVerseLayout/Layout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-1">Yapay Zeka Maç Tahminleri</h4>
+        <p class="text-muted small mb-0">Gelecek hafta · Süper Lig</p>
+    </div>
+    <i class="fa-solid fa-robot fa-2x text-muted"></i>
+</div>
+
+<ul class="nav nav-pills mb-4">
+    <li class="nav-item">
+        <a class="nav-link" href="/Football/Fixtures">← Fikstüre Dön</a>
+    </li>
+</ul>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="text-center py-5">
+        <i class="fa-solid fa-robot fa-3x text-muted mb-3"></i>
+        <p class="text-muted">Tahmin bulunamadı.</p>
+    </div>
+}
+else
+{
+    <div class="row g-3">
+        @foreach (var p in Model)
+        {
+            var teams = p.Match.Split(" vs ");
+            var home = teams.Length > 0 ? teams[0] : p.Match;
+            var away = teams.Length > 1 ? teams[1] : "";
+
+            var badgeColor = p.Confidence switch
+            {
+                "Yüksek" => "background: #222e3e; color: #fff;",
+                "Orta" => "background: #f1f5f9; color: #222e3e;",
+                _ => "background: #fee2e2; color: #991b1b;"
+            };
+
+            <div class="col-12">
+                <div style="background: #fff; border-radius: 20px; padding: 1.2rem 1.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.04);">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="text-end" style="width: 38%">
+                            <span class="fw-bold" style="font-size: 0.95rem;">@home</span>
+                        </div>
+                        <div class="text-center" style="width: 24%">
+                            <div style="background: #f1f5f9; color: #222e3e; border-radius: 12px; padding: 6px 14px; font-weight: 700; font-size: 0.8rem; display: inline-block;">
+                                vs
+                            </div>
+                            <div class="mt-1">
+                                <span style="@badgeColor border-radius: 10px; padding: 3px 10px; font-size: 0.72rem; font-weight: 600;">
+                                </span>
+                            </div>
+                        </div>
+                        <div class="text-start" style="width: 38%">
+                            <span class="fw-bold" style="font-size: 0.95rem;">@away</span>
+                        </div>
+                    </div>
+                    <div style="border-top: 1px solid rgba(0,0,0,0.05); padding-top: 0.8rem;">
+                        <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.5;">
+                            <i class="fa-solid fa-brain me-1" style="color: #6366f1;"></i>
+                            @p.Prediction
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

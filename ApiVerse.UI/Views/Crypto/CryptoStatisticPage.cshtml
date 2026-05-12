@@ -1,0 +1,171 @@
+﻿@model List<ApiVerse.Api.Models.CryptoModels.CryptoResponseViewModel.CryptoResult>
+@{
+    ViewData["Title"] = "Kripto Dashboard";
+    Layout = "~/Views/ApiVerseLayout/Layout.cshtml";
+}
+
+<style>
+    .crypto-card {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 1.4rem 1.6rem;
+        border: 1px solid rgba(0,0,0,0.06);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: pointer;
+    }
+
+        .crypto-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        }
+
+    .coin-logo {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        object-fit: contain;
+        background: #f8fafc;
+        padding: 4px;
+        border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .coin-symbol {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #222e3e;
+        line-height: 1.2;
+    }
+
+    .coin-name {
+        font-size: 0.78rem;
+        color: #94a3b8;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 110px;
+    }
+
+    .coin-rank {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: #cbd5e1;
+        letter-spacing: 0.5px;
+    }
+
+    .coin-price {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: #222e3e;
+        margin: 0.8rem 0 0;
+        letter-spacing: -0.5px;
+    }
+
+        .coin-price span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #94a3b8;
+        }
+</style>
+
+<div class="container-fluid">
+
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h4 style="font-weight:800; color:#222e3e; margin:0;">Kripto Para Piyasası</h4>
+            <p style="color:#94a3b8; margin:0; font-size:0.85rem;">TRY bazlı anlık top 20</p>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 16px; border-radius:20px;">
+            <span style="width:8px; height:8px; background:#22c55e; border-radius:50%; display:inline-block;"></span>
+            <span style="font-size:0.82rem; font-weight:600; color:#64748b;">Canlı</span>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row g-3">
+            @foreach (var coin in Model)
+            {
+                var priceFormatted = coin.Price >= 1000
+                ? coin.Price.ToString("N0")
+                : coin.Price >= 1
+                ? coin.Price.ToString("N2")
+                : coin.Price.ToString("N4");
+
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                    <div class="crypto-card">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="@coin.Image" class="coin-logo" alt="@coin.Symbol" onerror="this.src=''" />
+                                <div>
+                                    <div class="coin-symbol">@coin.Symbol</div>
+                                    <div class="coin-name">@coin.Name</div>
+                                </div>
+                            </div>
+                            <div class="coin-rank">#@coin.Rank</div>
+                        </div>
+                        <div class="coin-price">
+                            @priceFormatted <span>₺</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div style="background:#fff1f2; border-radius:20px; padding:2rem; text-align:center;">
+            <i class="fa-solid fa-triangle-exclamation" style="font-size:2rem; color:#e11d48;"></i>
+            <p style="margin-top:1rem; color:#e11d48; font-weight:600;">Kripto verileri alınamadı.</p>
+        </div>
+    }
+    @if (ViewBag.AiComment != null)
+    {
+        <div class="mt-4">
+            <div style="background:#ffffff; border-radius:20px; padding:2rem; border:1px solid rgba(0,0,0,0.06);">
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:1.2rem;">
+                    <div style="background:#f5f3ff; width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center;">
+                        <i class="fa-solid fa-robot" style="font-size:1.2rem; color:#7c3aed;"></i>
+                    </div>
+                    <div>
+                        <h5 style="margin:0; font-weight:800; color:#222e3e;">AI Kripto Analizi</h5>
+                    </div>
+                </div>
+                <hr style="border-color:#f1f5f9; margin:0 0 1.2rem;">
+
+                <style>
+                    .ai-analysis section {
+                        margin-bottom: 1.2rem;
+                        padding: 1rem 1.2rem;
+                        background: #f8fafc;
+                        border-radius: 12px;
+                        border-left: 3px solid #7c3aed;
+                    }
+
+                        .ai-analysis section:last-child {
+                            border-left-color: #e11d48;
+                            background: #fff1f2;
+                            margin-bottom: 0;
+                        }
+
+                    .ai-analysis h6 {
+                        font-weight: 700;
+                        color: #222e3e;
+                        margin: 0 0 0.5rem;
+                        font-size: 0.88rem;
+                    }
+
+                    .ai-analysis p {
+                        color: #475569;
+                        line-height: 1.85;
+                        margin: 0;
+                        font-size: 0.91rem;
+                    }
+                </style>
+
+                <div class="ai-analysis">
+                    @Html.Raw(ViewBag.AiComment)
+                </div>
+            </div>
+        </div>
+    }
+</div>
