@@ -134,6 +134,57 @@ ApiVerse/
 ---
 
 # 📦 MODÜLLER
+## Profile/Register/Login
+
+
+## 1. Giriş Yap (Login)
+
+**Yol:** `/Account/Login`
+
+**Açıklama:**
+Kayıtlı kullanıcıların sisteme giriş yapabildiği kimlik doğrulama sayfası. ASP.NET Core Identity altyapısı ile güvenli oturum yönetimi sağlanmaktadır.
+
+> 📸 **Login Sayfası**
+
+---
+
+## 2. Kayıt Ol (Register)
+
+**Yol:** `/Account/Register`
+
+**Açıklama:**
+Yeni kullanıcıların sisteme üye olabildiği kayıt sayfası. ASP.NET Core Identity üzerinden kullanıcı oluşturma işlemi gerçekleştirilmekte, form doğrulama ve şifre güçlülük kontrolü uygulanmaktadır.
+
+**Özellikler:**
+- 👤 **Kullanıcı Bilgileri** — Ad soyad, kullanıcı adı ve e-posta alanları
+- 🔐 **Şifre & Tekrar Şifre** — Identity şifre kurallarına uygun eşleşme kontrolü
+- ✅ **Form Doğrulama** — DataAnnotations ile zorunlu alan ve format kontrolü
+- 🛡️ **Identity Şifre Kuralları** — Büyük harf, rakam, özel karakter gereksinimleri
+- ⚠️ **Hata Mesajları** — Kayıt sırasında oluşan Identity hatalarının kullanıcıya gösterimi
+- 🔗 **Giriş Yap Yönlendirmesi** — Zaten hesabı olan kullanıcılar için Login sayfasına link
+
+> 📸 **Register Sayfası**
+
+---
+
+## 9. Profil Sayfası (Profile)
+
+**Yol:** `/Account/Profile`
+
+**Açıklama:**
+Giriş yapmış kullanıcının hesap bilgilerini görüntüleyebildiği ve güncelleyebildiği profil yönetim sayfası. ASP.NET Core Identity üzerinden kullanıcı bilgileri güncellenmektedir.
+
+**Özellikler:**
+- 👤 **Kullanıcı Bilgileri** — Ad soyad, kullanıcı adı ve e-posta bilgilerinin görüntülenmesi
+- ✏️ **Bilgi Güncelleme** — Ad soyad, kullanıcı adı ve e-posta düzenleme formu
+- 🔐 **Şifre Değiştirme** — Mevcut şifre doğrulaması ile yeni şifre belirleme
+- 🖼️ **Profil Fotoğrafı** — Avatar güncelleme alanı
+- ✅ **Güncelleme Bildirimi** — Başarılı güncelleme sonrası kullanıcıya onay mesajı
+- 🚪 **Çıkış Yap** — Identity SignOut ile güvenli oturum sonlandırma
+
+> 📸 **Profil Bilgileri Sayfası**
+
+
 
 ---
 
