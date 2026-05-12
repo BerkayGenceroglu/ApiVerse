@@ -161,200 +161,256 @@ Anlık kripto para fiyatlarını, 24 saatlik değişim oranlarını ve piyasa ve
 
 ---
 
-## 2. GitHub Trending Modülü
+## 2. Deprem Modülü
 
-**Yol:** `/GitHub/Trending`
+**Yol:** `/Earthquake/LiveEarthquakePage`
 
 **Açıklama:**
-GitHub üzerindeki günlük ve haftalık trend repoları listeleyen, dil bazlı filtreleme destekleyen modül. GitHub REST API ve URL encoding ile C#, Python, JavaScript gibi dil filtrelemeleri yapılmaktadır.
+Gerçek zamanlı deprem verilerini çekerek anlık olarak listeleyen ve bölgesel analiz imkânı sunan modül. API üzerinden gelen sismik veriler işlenerek kullanıcıya güncel ve anlaşılır bir şekilde sunulmaktadır.
 
 **Özellikler:**
-- 🔥 **Günlük / Haftalık Trending** — Zaman aralığına göre en popüler repolar
-- 🗂️ **Dil Bazlı Filtreleme** — C#, Python, JavaScript, Go vb. dil seçimi (URL encoding destekli)
-- ⭐ **Repo Detayları** — Star sayısı, fork, açıklama ve dil bilgisi
-- 🧑‍💻 **Geliştirici Widget'ı** — Repo sahibine ait profil bilgileri
-
-> 📸 **GitHub Trending Listesi**
->
-> ![GitHub Trending](https://via.placeholder.com/900x500/0d1117/24292e?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
-
-> 📸 **Dil Filtresi Seçimi**
->
-> ![Dil Filtresi](https://via.placeholder.com/900x400/0d1117/24292e?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
+- 🌍 **Anlık Deprem Verileri** — Güncel sismik hareketler saniyelik olarak listelenir  
+- 📍 **Bölgesel Filtreleme** — Depremleri büyüklük ve lokasyona göre filtreleme  
+- 📊 **Detaylı Deprem Bilgisi** — Büyüklük, derinlik, tarih ve konum bilgileri  
+- ⚠️ **Gerçek Zamanlı Güncelleme** — API üzerinden sürekli veri akışı ile güncel takip  
 
 ---
 
-## 3. Google Books Modülü
+### 📸 Deprem Listeleme Ekranı
+
+<img width="1863" height="959" alt="Deprem1" src="https://github.com/user-attachments/assets/1fbce976-e3ab-4002-9a04-6726b3dfc4e7" />
+
+---
+
+### 📸 Deprem Detay Görünümü
+
+<img width="1860" height="953" alt="deprem2" src="https://github.com/user-attachments/assets/1420caa1-ab99-46a0-b485-3cd95296c41a" />
+
+---
+
+## 3. Konum & AI Öneri Modülü
+
+**Yol:** `/Location/Index`
+
+**Açıklama:**
+Kullanıcının konum verisini kullanarak çevresindeki önemli noktaları analiz eden ve GPT-4o destekli yapay zeka ile kişiselleştirilmiş öneriler sunan modül. Konum bazlı veriler AI katmanı ile zenginleştirilerek daha anlamlı hale getirilir.
+
+**Özellikler:**
+- 📍 **Konum Tespiti** — Kullanıcının anlık konumunu algılar  
+- 🧭 **Yakın Çevre Analizi** — Konuma göre ilgili yer ve bilgi önerileri sunar  
+- 🤖 **AI Destekli Öneri** — GPT-4o ile kişiye özel açıklama ve tavsiyeler üretir  
+- 📊 **Akıllı Veri Yorumlama** — Ham konum verisini anlamlı içgörülere dönüştürür  
+
+---
+
+### 📸 Konum Tabanlı Sonuçlar
+
+<img width="1860" height="951" alt="location1" src="https://github.com/user-attachments/assets/cf1d72c9-282b-4ed7-90ff-7ed3707f1b79" />
+
+
+---
+
+### 📸 AI Öneri Paneli
+
+<img width="1858" height="951" alt="location2" src="https://github.com/user-attachments/assets/0f0e0d9d-ea19-46ea-8365-d84af6cfee16" />
+
+
+---
+
+## 4. Sosyal Medya Trend Modülü
+
+**Yol:** `/SocialMedia/Index`
+
+**Açıklama:**
+YouTube, Spotify ve Reddit platformlarından popüler içerikleri çekerek tek bir ekranda toplayan ve GPT-4o ile analiz eden modül. Trend veriler kullanıcıya daha anlaşılır ve yorumlanabilir şekilde sunulur.
+
+**Özellikler:**
+- 📺 **YouTube Trend Videoları** — Popüler videolar ve içerik akışı  
+- 🎵 **Spotify Trend Şarkılar** — En çok dinlenen şarkılar ve playlist verileri  
+- 🤖 **Reddit Trend Postları** — Toplulukta öne çıkan gönderiler ve başlıklar  
+- 📊 **AI Trend Analizi** — GPT-4o ile platformlar arası trend karşılaştırması ve yorumlama  
+- 🔄 **Tek Panel Görünüm** — Tüm sosyal medya trendleri tek ekranda birleşik sunum  
+
+---
+
+### 📸 YouTube ,Spotify & Reddit Trend Paneli Trend Görünümü
+
+<img width="1857" height="951" alt="location3" src="https://github.com/user-attachments/assets/f71b66d3-69d0-42a3-9626-8d212474338f" />
+
+
+
+---
+
+## 5. Güncel Döviz Bilgi & AI Öneri Modülü
+
+**Yol:** `/Currency/Index`
+
+**Açıklama:**
+Güncel döviz kurlarını anlık olarak takip eden ve GPT-4o destekli yapay zeka ile kullanıcıya analiz ve yönlendirme sunan modül. Kur değişimleri yorumlanarak yatırım ve finansal kararlar için daha anlamlı hale getirilir.
+
+**Özellikler:**
+- 💱 **Anlık Döviz Kurları** — USD, EUR, GBP ve diğer para birimlerinin güncel değerleri  
+- 📊 **Kur Değişim Takibi** — Günlük ve anlık değişim oranlarının analizi  
+- 🌍 **Çoklu Para Birimi Desteği** — Farklı ülkelerin para birimleri arasında karşılaştırma  
+- 🤖 **AI Finans Yorumu** — GPT-4o ile kur hareketlerine dair yorum ve olası senaryo analizi  
+- 📈 **Trend Analizi** — Kurların yükseliş/düşüş eğilimlerinin görselleştirilmesi  
+
+---
+
+### 📸 Döviz Kurları Paneli
+
+<img width="1848" height="951" alt="döviz" src="https://github.com/user-attachments/assets/a890fbe3-e5e3-459a-bd9d-afd95b4bc2e7" />
+
+---
+
+## 6. Süper Lig Fikstür & AI Tahmin Modülü
+
+**Yol:** `/Football/Index`
+
+**Açıklama:**
+Süper Lig fikstür verilerini çekerek maçları listeleyen ve GPT-4o destekli yapay zeka ile maç tahminleri, form durumu ve analizler sunan modül. Takım performansları ve geçmiş veriler üzerinden yorumlar üretilir.
+
+**Özellikler:**
+- ⚽ **Güncel Fikstür** — Süper Lig maç programı ve karşılaşma listesi  
+- 📊 **Takım Form Durumu** — Son maç performanslarına göre analiz  
+- 🧠 **AI Maç Tahmini** — GPT-4o ile olası maç sonucu tahminleri  
+- 📈 **İstatistiksel Analiz** — Gol, puan ve performans verilerinin değerlendirilmesi  
+- 🔄 **Canlı Güncellenen Veri** — Fikstür ve sonuçların anlık olarak güncellenmesi  
+
+---
+
+### 📸 Süper Lig Fikstür Görünümü
+
+<img width="1848" height="956" alt="MATCHLAST" src="https://github.com/user-attachments/assets/ad34e4e4-d003-420e-8257-f66c3ac1bce5" />
+<img width="1850" height="953" alt="THİSWEEK" src="https://github.com/user-attachments/assets/c75d03b9-0ba8-426f-a611-7bbf41823be1" />
+<img width="1846" height="952" alt="MATCHAFTER" src="https://github.com/user-attachments/assets/e94e1b72-4a76-4a0c-b415-f78f357d28e8" />
+
+---
+
+### 📸 AI Maç Tahmin Paneli
+
+<img width="1516" height="1544" alt="AİÖNERİ" src="https://github.com/user-attachments/assets/6c5ccdca-fd80-45a3-8e4a-850a5239a7a4" />
+
+
+---
+
+
+## 7. Güncel Yakıt & AI Tahmin Modülü
+
+**Yol:** `/Fuel/Index`
+
+**Açıklama:**
+Güncel akaryakıt fiyatlarını anlık olarak takip eden ve GPT-4o destekli yapay zeka ile fiyat değişimlerini analiz edip tahminler üreten modül. Kullanıcıya hem mevcut fiyatlar hem de olası fiyat yönü hakkında yorumlar sunar.
+
+**Özellikler:**
+- ⛽ **Güncel Yakıt Fiyatları** — Benzin, motorin ve LPG fiyatlarının anlık takibi  
+- 📊 **Fiyat Değişim Analizi** — Günlük ve haftalık değişimlerin karşılaştırılması  
+- 🧠 **AI Fiyat Tahmini** — GPT-4o ile yakıt fiyatlarının olası artış/azalış senaryoları  
+- 🌍 **Bölgesel Karşılaştırma** — Şehir bazlı fiyat farklılıklarının analizi  
+- 📈 **Trend Görselleştirme** — Yakıt fiyatlarının zaman içindeki değişim eğilimi  
+
+---
+
+### 📸 Yakıt Fiyatları ve  AI Tahmin & Analiz Paneli
+
+<img width="1800" height="1544" alt="fuel" src="https://github.com/user-attachments/assets/0bf7d558-5319-4b41-8bc4-efb107412d94" />
+
+
+---
+
+## 8. Hava Durumu Bilgi & AI Öneri Modülü
+
+**Yol:** `/Weather/Index`
+
+**Açıklama:**
+Gerçek zamanlı hava durumu verilerini çekerek kullanıcıya anlık durum, saatlik/günlük tahmin ve GPT-4o destekli kişisel öneriler sunan modül. Hava koşullarına göre giyinme, aktivite ve planlama önerileri üretir.
+
+**Özellikler:**
+- 🌤️ **Anlık Hava Durumu** — Sıcaklık, hissedilen değer, nem ve rüzgar bilgisi  
+- 📅 **Günlük & Saatlik Tahmin** — Gün içi ve ileri günlere ait hava durumu analizi  
+- 📍 **Konum Bazlı Veri** — Kullanıcının bulunduğu konuma göre otomatik hava bilgisi  
+- 🤖 **AI Öneri Sistemi** — GPT-4o ile hava durumuna göre günlük yaşam önerileri  
+- 🎯 **Aktivite Önerileri** — Hava koşullarına uygun dış mekan/iç mekan önerileri  
+
+---
+
+### 📸 Hava Durumu ve AI Öneri Paneli
+
+<img width="1859" height="955" alt="WEATHER" src="https://github.com/user-attachments/assets/2a65991b-ac5f-405c-bee1-c629d1f6e16d" />
+
+---
+
+## 9. Film Öneri Sistemi
+
+**Yol:** `/Movies/Index`
+
+**Açıklama:**
+Film verilerini analiz ederek kullanıcıya tür, puan, yıl ve izleme alışkanlıklarına göre kişiselleştirilmiş film önerileri sunan modül. GPT-4o destekli yapay zeka ile içerik yorumlama ve öneri sistemi birlikte çalışır.
+
+**Özellikler:**
+- 🎬 **Film Listeleme** — Güncel ve popüler filmlerin listelenmesi  
+- 🎭 **Tür Bazlı Filtreleme** — Aksiyon, dram, komedi, bilim kurgu gibi kategoriler  
+- ⭐ **Puan & Yorum Analizi** — Film değerlendirme ve kullanıcı yorumlarının analizi  
+- 🤖 **AI Film Önerisi** — GPT-4o ile kullanıcıya özel film tavsiyeleri  
+- 📊 **Trend Film Analizi** — Popüler film eğilimlerinin takip edilmesi  
+
+---
+
+### 📸 Film Listesi
+
+
+<img width="1855" height="961" alt="flim" src="https://github.com/user-attachments/assets/1353296c-286f-4698-9391-38221516cfce" />
+
+
+---
+
+## 10. Kitap Arama & AI Öneri Sistemi
 
 **Yol:** `/Books/Index`
 
 **Açıklama:**
-Google Books API ile kitap arama, listeleme ve öneri yapabilen modül. Kullanıcılar anahtar kelime veya kategori ile kitap arayabilir; GPT-4o ile kişiselleştirilmiş öneri alabilir.
+Google Books API üzerinden kitap verilerini çekerek kullanıcıya arama, filtreleme ve GPT-4o destekli kişiselleştirilmiş kitap önerileri sunan modül. Kullanıcının ilgi alanlarına göre en uygun kitapları analiz ederek önerir.
 
 **Özellikler:**
-- 🔍 **Kitap Arama** — Başlık, yazar veya ISBN ile arama
-- 🏷️ **Kategori Bazlı Listeleme** — Türe göre filtrelenmiş kitap listesi
-- 📖 **Kitap Detayı** — Yazar, yayınevi, sayfa sayısı, ISBN, önizleme linki
-- 🤖 **AI Kitap Önerisi** — Tercihlerinize göre GPT-4o destekli kişisel öneri
-
-> 📸 **Kitap Arama Sonuçları**
->
-> ![Google Books](https://via.placeholder.com/900x500/0d1117/4285F4?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
-
-> 📸 **Kitap Detay Sayfası**
->
-> ![Kitap Detay](https://via.placeholder.com/900x400/0d1117/4285F4?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
+- 🔍 **Kitap Arama** — Başlık, yazar veya anahtar kelime ile kitap arama  
+- 🏷️ **Kategori Bazlı Listeleme** — Türlere göre filtrelenmiş kitap sonuçları  
+- 📖 **Kitap Detayları** — Yazar, yayınevi, sayfa sayısı, ISBN ve açıklama bilgisi  
+- 🤖 **AI Kitap Önerisi** — GPT-4o ile kullanıcı ilgi alanına göre kişisel öneriler  
+- 📊 **Okuma Trend Analizi** — Popüler kitaplar ve okuma eğilimlerinin analizi  
 
 ---
 
-## 4. Spotify Modülü
+### 📸 Kitap Arama Sonuçları
 
-**Yol:** `/Spotify/Index`
+<img width="1872" height="1372" alt="Book" src="https://github.com/user-attachments/assets/44ffaff5-fdbb-429a-8bf9-0ad380830cf4" />
+<img width="1844" height="1356" alt="Book2" src="https://github.com/user-attachments/assets/e9d3141d-a950-4f3b-a2a7-96a0e35e6b8e" />
+
+
+---
+
+## 11. Güncel Haber & Bilgi Sistemi
+
+**Yol:** `/News/Index`
 
 **Açıklama:**
-Spotify Web API ile Türkiye Top-50 ve çeşitli playlist verilerini çeken modül. Şarkı, sanatçı ve albüm bilgileri listelenmekte, Spotify bağlantıları sağlanmaktadır. Client Credentials Flow ile otomatik token yönetimi yapılmaktadır.
+Farklı kaynaklardan (haber API’leri ve RSS feed’ler) güncel haberleri çekerek kullanıcıya kategorize edilmiş şekilde sunan modül. Spor, teknoloji, ekonomi ve dünya gündemi gibi alanlarda anlık bilgi akışı sağlar.
 
 **Özellikler:**
-- 🇹🇷 **Türkiye Top-50** — Türkiye günlük en çok dinlenen şarkılar
-- 🎵 **Şarkı & Sanatçı Bilgisi** — Albüm kapağı, sanatçı adı, şarkı ismi
-- 🔗 **Spotify Linki** — Şarkıyı Spotify'da dinlemek için yönlendirme
-- 🔑 **Token Yönetimi** — Client Credentials Flow ile otomatik erişim token'ı
-
-> 📸 **Türkiye Top-50 Listesi**
->
-> ![Spotify Top 50](https://via.placeholder.com/900x500/0d1117/1DB954?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
-
-> 📸 **Playlist Görünümü**
->
-> ![Spotify Playlist](https://via.placeholder.com/900x400/0d1117/1DB954?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
+- 📰 **Güncel Haber Akışı** — En son yayınlanan haberlerin listelenmesi  
+- 🗂️ **Kategori Bazlı Filtreleme** — Spor, ekonomi, teknoloji, dünya gündemi  
+- 🌍 **Kaynak Bazlı Çekim** — Farklı haber API ve RSS kaynaklarından veri toplama  
+- ⚡ **Anlık Güncellenen İçerik** — Sürekli yenilenen haber akışı  
+- 📄 **Detay Görünümü** — Haber başlığı, açıklama, tarih ve kaynak bilgisi  
 
 ---
 
-## 5. İş İlanları Modülü
+### 📸 Haber Listesi
 
-**Yol:** `/Jobs/Index`
-
-**Açıklama:**
-Adzuna API kullanılarak Türkiye'deki güncel iş ilanlarını listeleyen ve filtreleyen modül. Şehir ve kategori bazlı filtreleme, sayfalama ve AI destekli ilan analizi özelliklerine sahiptir.
-
-**Özellikler:**
-- 🏙️ **Şehir & Kategori Filtresi** — İstanbul, Ankara gibi şehir bazlı ve kategori bazlı filtreleme
-- 🏢 **İlan Detayları** — Şirket adı, konum, maaş aralığı, iş tanımı
-- 📄 **Sayfalama** — Büyük ilan listeleri için pagination desteği
-- 🤖 **AI İlan Değerlendirmesi** — GPT-4o ile pozisyon uygunluk analizi
-
-> 📸 **İş İlanları Listesi**
->
-> ![İş İlanları](https://via.placeholder.com/900x500/0d1117/0077B5?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
-
-> 📸 **Şehir / Kategori Filtresi**
->
-> ![İş İlanı Filtresi](https://via.placeholder.com/900x400/0d1117/0077B5?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
+<img width="1845" height="1333" alt="News" src="https://github.com/user-attachments/assets/2bc7d489-5e44-4b17-9c74-f2f035afda45" />
 
 ---
 
-## 6. AI Analiz Katmanı
 
-**Yol:** Her modülün `/Analyze` endpoint'i
-
-**Açıklama:**
-Tüm modüllere entegre edilmiş GPT-4o destekli analiz katmanı. Modülden gelen veri OpenAI API'ye gönderilir; üretilen HTML çıktı Razor View içinde `@Html.Raw()` ile render edilir.
-
-**Özellikler:**
-- 🧠 **Modül Bazlı Prompt** — Her modül için özelleştirilmiş system prompt
-- 🌐 **HTML Formatlı Çıktı** — AI yanıtı doğrudan HTML olarak üretilir, sayfaya render edilir
-- 📨 **MassTransit ile Asenkron** — AI istekleri message bus üzerinden yönetilir
-- ⚡ **Hızlı Yanıt** — Streaming olmadan yapılandırılmış tek yanıt modeli
-
-**AI Akış Diyagramı:**
-```
-Kullanıcı → MVC Controller → MassTransit Bus
-                                    ↓
-                            ApiVerse.Api Consumer
-                                    ↓
-                            OpenAI GPT-4o
-                                    ↓
-                            HTML Formatlı Yanıt
-                                    ↓
-                            Razor @Html.Raw() Render
-```
-
-> 📸 **AI Analiz Çıktısı Örneği**
->
-> ![AI Analiz](https://via.placeholder.com/900x500/0d1117/412991?text=📸+Buraya+Ekran+Görüntüsü+Ekleyin)
-
----
-
-## ⚙️ Kurulum ve Çalıştırma
-
-### Gereksinimler
-
-- .NET 8.0 SDK
-- Visual Studio 2022 veya VS Code
-- (Opsiyonel) RabbitMQ — MassTransit transport için
-
-### Adımlar
-
-```bash
-# 1. Repoyu klonla
-git clone https://github.com/BerkayGenceroglu/ApiVerse.git
-
-# 2. Proje dizinine git
-cd ApiVerse
-
-# 3. appsettings.json dosyalarını yapılandır
-# ApiVerse.Api ve ApiVerse.UI için API anahtarlarını ekle
-
-# 4. API projesini çalıştır
-cd ApiVerse.Api
-dotnet run
-# → https://localhost:7001
-
-# 5. UI projesini çalıştır (yeni terminal)
-cd ApiVerse.UI
-dotnet run
-# → https://localhost:7000
-```
-
-> 💡 **Visual Studio kullanıyorsanız:** Solution'ı açın, her iki projeyi de başlangıç projesi olarak seçip F5 ile çalıştırın.
-
----
-
-## 🔧 Yapılandırma
-
-### ApiVerse.Api — `appsettings.json`
-
-```json
-{
-  "OpenAI": {
-    "ApiKey": "sk-xxxxxxxxxxxxxxxxxxxx",
-    "Model": "gpt-4o"
-  },
-  "GitHub": {
-    "Token": "ghp_xxxxxxxxxxxxxxxxxxxx"
-  },
-  "Spotify": {
-    "ClientId": "your_spotify_client_id",
-    "ClientSecret": "your_spotify_client_secret"
-  },
-  "Adzuna": {
-    "AppId": "your_adzuna_app_id",
-    "AppKey": "your_adzuna_app_key"
-  }
-}
-```
-
-### ApiVerse.UI — `appsettings.json`
-
-```json
-{
-  "ApiSettings": {
-    "BaseUrl": "https://localhost:7001"
-  }
-}
-```
-
-> ⚠️ **Önemli:** API anahtarlarını asla kaynak koduna veya Git'e commit etmeyin. `.gitignore`'a `appsettings.Development.json` ekleyerek hassas bilgileri güvende tutun.
 
 ---
 
@@ -377,6 +433,7 @@ Proje hakkında sorularınız, önerileriniz ya da katkı istekleriniz için ben
 ---
 
 ## 💬 Son Söz
+<img width="417" height="337" alt="image" src="https://github.com/user-attachments/assets/a70e40a1-6c86-4953-97e5-43fa6b003d08" />
 
 Teşekkürler! Bu projeyi incelediğiniz için memnuniyet duyarım.  
 Her türlü geri bildirime açığım.
