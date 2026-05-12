@@ -120,11 +120,16 @@ ApiVerse/
 
 **ApiVerse**'in en öne çıkan özelliği, her modüle ayrı ayrı entegre edilmiş GPT-4o tabanlı yapay zeka katmanıdır:
 
-- 📊 **Kripto Analizi** — Piyasa verilerini yorumlar, yatırım değerlendirmesi üretir
-- 📚 **Kitap Önerisi** — Kullanıcı tercihlerine göre kişiselleştirilmiş kitap önerir
-- 💼 **İlan Analizi** — İş ilanlarını pozisyon uygunluğuna göre değerlendirir
-- 🌐 **HTML Çıktı** — AI yanıtları doğrudan HTML formatında üretilerek Razor View içinde render edilir
-- ⚡ **MassTransit ile Asenkron** — Tüm AI istekleri mesaj kuyruğu üzerinden yönetilir
+- 📊 Kripto Analizi — Kripto para piyasasındaki verileri analiz eder ve yatırım odaklı yorumlar üretir
+- 🌍 Deprem Verisi — Anlık deprem verilerini takip eder ve bölgesel analizler sunar
+- 📍 Konum Servisi — Kullanıcının konum bazlı verilerine göre bilgi ve öneriler üretir
+- ⛽ Yakıt Fiyatları — Güncel akaryakıt fiyatlarını takip eder ve karşılaştırmalı analiz sunar
+- 💱 Döviz Verisi — Güncel kur bilgilerini alır ve değişim trendlerini analiz eder
+- ⚽ Futbol Verisi — Maç sonuçları, takım istatistikleri ve güncel futbol verilerini analiz eder
+- 📚 Kitap Önerisi — Kullanıcı ilgi alanlarına göre kişiselleştirilmiş kitap önerileri sunar
+- 🎵 Müzik Verisi — Popüler müzik trendlerini ve sanatçı verilerini analiz eder
+- 🎬 Film Verisi — Film bilgilerini ve izleme trendlerini analiz ederek öneriler sunar
+- 🌐 HTML Çıktı Üretimi — Yapay zeka yanıtlarını doğrudan HTML formatında oluşturup Razor View içinde dinamik olarak render eder
 
 ---
 
