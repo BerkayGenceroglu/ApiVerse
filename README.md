@@ -1,4 +1,4 @@
-<h1 align="center"> ApiVerse — Çok Modüllü API ve AI Entegrasyon Platformu</h1>
+<h1 align="center">⚡​ ApiVerse — Çok Modüllü API ve AI Entegrasyon Platformu 💻​</h1>
 
 <p align="center">
 Kripto, deprem, konum, yakıt, döviz, futbol, kitap, müzik ve film verilerini tek bir çatı altında toplayan; GPT-4o destekli yapay zeka analiz katmanına sahip ASP.NET Core MVC / Web API tabanlı bir platformdur.
