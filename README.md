@@ -130,7 +130,7 @@ ApiVerse/
 - 🎵 Müzik Verisi — Popüler müzik trendlerini ve sanatçı verilerini analiz eder
 - 🎬 Film Verisi — Film bilgilerini ve izleme trendlerini analiz ederek öneriler sunar
 - 🌐 HTML Çıktı Üretimi — Yapay zeka yanıtlarını doğrudan HTML formatında oluşturup Razor View içinde dinamik olarak render eder
-
+- 📱 Sosyal Medya Analizi — YouTube, Reddit, Spotify ve diğer platformlardan trend içerikleri çekerek analiz eder
 ---
 
 # 📦 MODÜLLER
