@@ -145,44 +145,33 @@ ApiVerse/
 Kayıtlı kullanıcıların sisteme giriş yapabildiği kimlik doğrulama sayfası. ASP.NET Core Identity altyapısı ile güvenli oturum yönetimi sağlanmaktadır.
 
 > 📸 **Login Sayfası**
+<img width="1846" height="959" alt="Profile" src="https://github.com/user-attachments/assets/4fd331c1-cacc-4568-96b6-4778abb88e43" />
 
 ---
 
-## 2. Kayıt Ol (Register)
+## 2. Üye Ol (Register)
 
 **Yol:** `/Account/Register`
 
 **Açıklama:**
 Yeni kullanıcıların sisteme üye olabildiği kayıt sayfası. ASP.NET Core Identity üzerinden kullanıcı oluşturma işlemi gerçekleştirilmekte, form doğrulama ve şifre güçlülük kontrolü uygulanmaktadır.
 
-**Özellikler:**
-- 👤 **Kullanıcı Bilgileri** — Ad soyad, kullanıcı adı ve e-posta alanları
-- 🔐 **Şifre & Tekrar Şifre** — Identity şifre kurallarına uygun eşleşme kontrolü
-- ✅ **Form Doğrulama** — DataAnnotations ile zorunlu alan ve format kontrolü
-- 🛡️ **Identity Şifre Kuralları** — Büyük harf, rakam, özel karakter gereksinimleri
-- ⚠️ **Hata Mesajları** — Kayıt sırasında oluşan Identity hatalarının kullanıcıya gösterimi
-- 🔗 **Giriş Yap Yönlendirmesi** — Zaten hesabı olan kullanıcılar için Login sayfasına link
-
 > 📸 **Register Sayfası**
+
+<img width="1862" height="947" alt="Register" src="https://github.com/user-attachments/assets/48b7c9dd-31ed-4943-8c21-6be8afc09c67" />
 
 ---
 
-## 9. Profil Sayfası (Profile)
+## 3. Profil Sayfası (Profile)
 
 **Yol:** `/Account/Profile`
 
 **Açıklama:**
 Giriş yapmış kullanıcının hesap bilgilerini görüntüleyebildiği ve güncelleyebildiği profil yönetim sayfası. ASP.NET Core Identity üzerinden kullanıcı bilgileri güncellenmektedir.
 
-**Özellikler:**
-- 👤 **Kullanıcı Bilgileri** — Ad soyad, kullanıcı adı ve e-posta bilgilerinin görüntülenmesi
-- ✏️ **Bilgi Güncelleme** — Ad soyad, kullanıcı adı ve e-posta düzenleme formu
-- 🔐 **Şifre Değiştirme** — Mevcut şifre doğrulaması ile yeni şifre belirleme
-- 🖼️ **Profil Fotoğrafı** — Avatar güncelleme alanı
-- ✅ **Güncelleme Bildirimi** — Başarılı güncelleme sonrası kullanıcıya onay mesajı
-- 🚪 **Çıkış Yap** — Identity SignOut ile güvenli oturum sonlandırma
 
 > 📸 **Profil Bilgileri Sayfası**
+<img width="1846" height="959" alt="Profile" src="https://github.com/user-attachments/assets/781b1448-8492-4b4c-a681-9171905f8de6" />
 
 
 
