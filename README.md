@@ -134,7 +134,7 @@ ApiVerse/
 ---
 
 # 📦 MODÜLLER
-## Profile/Register/Login
+## UI Giriş ve Kayıt
 
 
 ## 1. Giriş Yap (Login)
@@ -144,8 +144,7 @@ ApiVerse/
 **Açıklama:**
 Kayıtlı kullanıcıların sisteme giriş yapabildiği kimlik doğrulama sayfası. ASP.NET Core Identity altyapısı ile güvenli oturum yönetimi sağlanmaktadır.
 
-> 📸 **Login Sayfası**
-<img width="1846" height="959" alt="Profile" src="https://github.com/user-attachments/assets/4fd331c1-cacc-4568-96b6-4778abb88e43" />
+> 📸 **Login Sayfası**<img width="1860" height="953" alt="login" src="https://github.com/user-attachments/assets/482ece3b-ac7c-423a-869e-218c2a9cc765" />
 
 ---
 
