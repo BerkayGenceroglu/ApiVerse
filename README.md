@@ -272,13 +272,6 @@ YouTube, Spotify ve Reddit platformlarından popüler içerikleri çekerek tek b
 
 <img width="1280" height="661" alt="image" src="https://github.com/user-attachments/assets/3a7b29f7-dff2-4312-9140-7213dad46875" />
 
----
-
-### 📸 YouTube ,Spotify & Reddit Trend Paneli Trend Görünümü
-
-<img width="1857" height="951" alt="location3" src="https://github.com/user-attachments/assets/f71b66d3-69d0-42a3-9626-8d212474338f" />
-
-
 
 ---
 
